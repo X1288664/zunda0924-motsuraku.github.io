@@ -1,0 +1,6 @@
+sitemap.xmlは新規webページ作成ごとに更新、既存ファイルの置き換えをすること
+サイト:
+http://www.sitemapxml.jp/
+
+サイトの紹介文をhtml内に入れる方法:
+http://www.sitemapxml.jp/linkplz.html

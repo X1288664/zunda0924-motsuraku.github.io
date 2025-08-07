@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zunda0924-motsuraku.f5.si/sitemap.xml

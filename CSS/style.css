@@ -1,0 +1,144 @@
+/*==================================================
+        基本設定
+        ==================================================*/
+        :root {
+            --base-color: #FFFFFF; --background-color: #f4f6f9; --text-color: #333333;
+            --accent-color: #007bff; --border-color: #e0e0e0; --footer-bg-color: #2c3e50;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; color: var(--text-color); background-color: var(--background-color); }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        img { max-width: 100%; height: auto; vertical-align: middle; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /*==================================================
+        ヘッダー
+        ==================================================*/
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background-color: var(--base-color); padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .site-header.has-scrolled {
+            background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body { padding-top: 82px; }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .site-branding { display: flex; align-items: center; }
+        .site-logo img { height: 50px; margin-right: 15px; }
+        .site-title { font-size: 1.5em; font-weight: bold; margin: 0; }
+        .site-description { font-size: 0.9em; color: #777; margin: 0; }
+
+        /*==================================================
+        ナビゲーション (変更箇所)
+        ==================================================*/
+        .main-navigation { position: relative; }
+        
+        /* ▼▼▼ [メニュー▼]ボタンのスタイル ▼▼▼ */
+        .menu-toggle {
+            display: block;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-color);
+            font-size: 0.9em; /* 文字サイズを少し調整 */
+            font-weight: bold;
+            font-family: 'Noto Sans JP', sans-serif;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .menu-toggle:hover, .menu-toggle.is-active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
+        }
+        /* ▲▲▲ [メニュー▼]ボタンのスタイル ▲▲▲ */
+        
+        .menu-container {
+            display: block; position: absolute; top: calc(100% + 10px); right: 0;
+            width: 200px; background-color: white; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); padding: 10px 0;
+            opacity: 0; transform: translateY(10px); visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        .menu-container a { display: block; padding: 12px 20px; }
+        .menu-container.is-open { opacity: 1; transform: translateY(0); visibility: visible; }
+        
+        /*==================================================
+        キービジュアル (index.htmlのみ)
+        ==================================================*/
+        .hero-fullscreen {
+            position: relative; width: 100%; height: calc(70vh - 82px);
+            min-height: 450px; color: #fff; background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background-image: url("../image/KB-WDX.jpg");
+        }
+        .hero-fullscreen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+        .hero-content { position: relative; padding: 20px; }
+        .hero-title { font-size: 3em; font-weight: bold; margin-top: 0; margin-bottom: 0.5em; }
+        .hero-subtitle { font-size: 1.2em; margin: 0; max-width: 600px; }
+        
+        /*==================================================
+        メインコンテンツ
+        ==================================================*/
+        .site-content { padding-top: 40px; padding-bottom: 40px; }
+        .card { background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
+        .page-title { margin-top: 0; font-size: 2em; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; }
+        .card h2 { margin-top: 0; font-size: 1.6em; }
+
+        /* --- index.html用 --- */
+        .content-grid { display: flex; gap: 30px; }
+        .main-column { flex: 3; }
+        .sidebar-column { flex: 1; }
+        .full-bleed-image { border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .sidebar-widget { margin-bottom: 30px; }
+        .sidebar-widget h3 { font-size: 1.2em; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); margin-top: 0; margin-bottom: 15px; }
+        .sidebar-widget ul { list-style: none; padding: 0; }
+        .sidebar-widget ul li a { display: block; padding: 8px 0; }
+        .update-list { list-style: none; padding-left: 0; }
+        .update-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .update-list li:last-child { border-bottom: none; }
+        
+        /* --- products.html用 --- */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .grid-item { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s ease; }
+        .grid-item:hover { transform: translateY(-5px); }
+        .grid-item-content { padding: 15px; }
+        .grid-item-content h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.1em; }
+        .grid-item-content p { margin: 0; font-size: 0.9em; color: #666; }
+        
+        /* --- Server-info.html用 --- */
+        .text-pre-line { white-space: pre-line; line-height: 1.8; }
+        .server-spec-list { list-style: none; padding-left: 0; }
+        .server-spec-list > li { margin-bottom: 10px; }
+        
+        /* --- 共通コンポーネント --- */
+        .youtube-container { position: relative; width: 100%; height: 0; padding-bottom: 56.25%; overflow: hidden; background-color: #000; }
+        .youtube-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        /*==================================================
+        フッター
+        ==================================================*/
+        .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center; font-size: 0.9em; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { color: #fff; margin: 0 10px; }
+        .footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
+        .footer-social-icons img:hover { opacity: 1; }
+        
+        /*==================================================
+        レスポンシブ対応
+        ==================================================*/
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.2em; }
+            .site-logo img { height: 40px; }
+            body { padding-top: 72px; }
+            .content-grid { flex-direction: column; }
+            .hero-title { font-size: 2em; }
+            .hero-subtitle { font-size: 1em; }
+        }
