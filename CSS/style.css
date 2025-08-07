@@ -113,10 +113,14 @@
         .grid-item-content h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.1em; }
         .grid-item-content p { margin: 0; font-size: 0.9em; color: #666; }
         
-        /* --- Server-info.html用 --- */
+        /* --- Server-info.html用ここから --- */
+        /* ---改行用途で流用可 ---*/
         .text-pre-line { white-space: pre-line; line-height: 1.8; }
+        /*↑改行用*/
+
         .server-spec-list { list-style: none; padding-left: 0; }
         .server-spec-list > li { margin-bottom: 10px; }
+        /* --- Server-info.html用ここまで --- */
         
         /* --- 共通コンポーネント --- */
         .youtube-container { position: relative; width: 100%; height: 0; padding-bottom: 56.25%; overflow: hidden; background-color: #000; }
