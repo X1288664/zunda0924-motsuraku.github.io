@@ -93,9 +93,12 @@
         .card h2 { margin-top: 0; font-size: 1.6em; }
 
         /* --- index.html用 --- */
-        .content-grid { display: flex; gap: 30px; }
+        .content-grid { display: flex; gap: 30px;
+                        /*align-items: flex-start; スティッキーサイドバーを有効にするにはコメントアウトを消す */ }
         .main-column { flex: 3; }
-        .sidebar-column { flex: 1; }
+        .sidebar-column {   flex: 1;
+                            /*position: sticky;  スティッキーサイドバーを有効にするにはコメントアウトを消す */
+                            /*top: 97px; スティッキーサイドバーを有効にするにはコメントアウトを消す */ }
         .full-bleed-image { border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
         .sidebar-widget { margin-bottom: 30px; }
         .sidebar-widget h3 { font-size: 1.2em; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); margin-top: 0; margin-bottom: 15px; }
