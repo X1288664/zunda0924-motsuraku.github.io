@@ -167,6 +167,26 @@
             text-decoration: none;
         }
 
+/*==================================================
+ ロゴと説明文のレイアウト用
+==================================================*/
+.tech-layout {
+    display: flex;
+    align-items: center; /* 画像とテキストを縦方向中央揃え */
+    gap: 20px; /* 画像とテキストの間の余白 */
+}
+
+/* ロゴ画像を入れるカラム */
+.tech-logo-column {
+    flex-basis: 100px; /* ロゴのカラム幅を100pxに固定 */
+    flex-shrink: 0; /* 親要素が縮んでもロゴカラムの幅は維持 */
+}
+
+/* 説明文を入れるカラム */
+.tech-description-column {
+    flex: 1; /* 残りの幅をすべて説明文のカラムが使う */
+}
+
         /*==================================================
         注意書きボックス用のスタイル
         ==================================================*/
@@ -192,7 +212,7 @@
         .footer-links a { color: #fff; margin: 0 10px; }
         .footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
         .footer-social-icons img:hover { opacity: 1; }
-        
+
         /*==================================================
         レスポンシブ対応
         ==================================================*/
@@ -207,4 +227,11 @@
                 flex-direction: column; /* 横並びを縦積みに変更 */
                 align-items: flex-start; /* 縦方向の揃えを上揃えに変更 */
                 }
+        .tech-layout {
+            flex-direction: column;     /* 横並びを縦積みに変更 */
+            align-items: flex-start;  /* 上揃えにする */
+        }
+        .tech-logo-column {
+            margin-bottom: 15px; /* 画像とテキストの間に余白を追加 */
+        }
         }

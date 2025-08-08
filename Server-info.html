@@ -14,7 +14,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>サーバー情報 - もつ楽公式サイト(Ver.0.5.0-Beta+GhP)</title>
+    <title>サーバー情報 - もつ楽公式サイト(Ver.0.6.0-Beta+GhP)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
                 <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽 ロゴ"></a>
                 <div>
                     <h1 class="site-title">もつ楽公式サイト</h1>
-                    <p class="site-description">(Ver.0.5.0-Beta+GhP)</p>
+                    <p class="site-description">(Ver.0.6.0-Beta+GhP)</p>
                 </div>
             </div>
             <nav class="main-navigation">
@@ -50,48 +50,75 @@
                     <a href="index.html">ホーム</a>
                     <a href="products.html">SNSなど</a>
                     <a href="https://forms.gle/Sq3ufPbdZ3qD3G5K7">フィードバック</a>
-                    <a href="Profile-server-manager.html">Profile</a>
+                    <a href="Profile-server-manager.html">プロフィール</a>
                 </div>
             </nav>
         </div>
     </header>
 
     <main class="site-content">
-        <div class="container">
-            <h1 class="page-title">このサイトの開発環境について</h1>
-            
-            <div class="card">
-                <h2>サーバー情報</h2>
-                <img src="image/IIS logo.png" alt="IIS Logo" style="max-width: 100%; height: auto;">
-                <txt>※画像はオリジナル制作です</txt>
-                <p>このWebサイトは、GitHub Pagesを利用して公開しています。</p>
-                <p>サイトの制作・開発中のテストにはパヤ爺個人サーバー上のMicrosoft IIS(Internet Information Services)を使用していました。</p>
-                <ul class="server-spec-list">
-                    <li><strong>OS:</strong> Windows11 Home</li>
-                    <li><strong>CPU:</strong> Intel N100 4Core 3.4GHz</li>
-                    <li><strong>RAM:</strong> DDR4 3200MHz 16GB</li>
-                    <li><strong>Storage:</strong>
-                        <p class="text-pre-line">
-                            C:/ 238GB (NVMe 2280, Main)
-                            D:/ 476GB (2.5 inch SSD, NAS01)
-                            E:/ 476GB (2.5 inch SSD, NAS02)
-                            F:/ 931GB (3.5 inch HDD, NAS03)
-                            G:/ 931GB (3.5 inch HDD, NAS04)
-                            H:/ 238GB (M.2 2280, Windows Backup)
-                            I:/ 118GB (2.5 inch SSD, for IIS)
+    <div class="container">
+        <h1 class="page-title">このサイトの開発環境について</h1>
+
+        <section class="card">
+            <div class="tech-layout">
+                <div class="tech-logo-column">
+                    <a href="https://github.com/X1288664/zunda0924-motsuraku.github.io" target="_blank" title="GitHub Repository">
+                        <img src="image/github-mark.svg" alt="GitHub Logo">
+                    </a>
+                </div>
+                <div class="tech-description-column">
+                    <h3>公開プラットフォーム: GitHub Pages</h3>
+                    <p class="text-pre-line">このWebサイトはGitHub Pagesを利用して公開されています。
+                        サイトデータはGitHubリポジトリで管理されています。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="tech-layout">
+                <div class="tech-logo-column">
+                    <img src="image/IIS logo.png" alt="IIS on Windows 11 Logo">
+                </div>
+                <div class="tech-description-column">
+                    <h3>開発環境: Microsoft IIS</h3>
+                    <small>※ロゴは自作です</small>
+                    <p class="text-pre-line">サイトの制作・開発中のテストには、
+                        以下のパヤ爺個人サーバー環境でMicrosoft IIS
+                        (Internet Information Services)を使用していました。
+                        <a class="text-pre-line" href="https://e-words.jp/w/IIS.html">Microsoft IISとは?</a>
+                            ※別のサイトに飛びます
                         </p>
-                    </li>
-                    <li><strong>使用サービス:</strong> Github Pages</li>
-                </ul>
-                <p><small>※予告なく変更する場合があります。</small></p>
+                </div>
             </div>
             
+            <ul class="server-spec-list" style="margin-top: 20px;">
+                <li><strong>OS:</strong> Windows11 Home</li>
+                <li><strong>CPU:</strong> Intel N100 4Core 3.4GHz</li>
+                <li><strong>RAM:</strong> DDR4 3200MHz 16GB</li>
+                <li><strong>Storage:</strong>
+                    <p class="text-pre-line">
+                        C:/ 238GB (NVMe 2280, Main)
+                        D:/ 476GB (2.5 inch SSD, NAS01)
+                        E:/ 476GB (2.5 inch SSD, NAS02)
+                        F:/ 931GB (3.5 inch HDD, NAS03)
+                        G:/ 931GB (3.5 inch HDD, NAS04)
+                        H:/ 238GB (M.2 2280, Windows Backup)
+                        I:/ 118GB (2.5 inch SSD, for IIS)
+                    </p>
+                </li>
+            </ul>
+            <p><small>※環境は予告なく変更する場合があります。</small></p>
+        </section>
             <div class="card">
-                <h2>見出し2 (準備中)</h2>
+                <h2>見出し2 (仮)</h2>
                 <p>新しい内容は、このようにカードを追加していくことで、簡単にページを拡張できます。</p>
             </div>
         </div>
+    </div>
     </main>
+            
+
 
     <footer class="site-footer">
         <div class="container">
