@@ -128,6 +128,44 @@
         /* --- 共通コンポーネント --- */
         .youtube-container { position: relative; width: 100%; height: 0; padding-bottom: 56.25%; overflow: hidden; background-color: #000; }
         .youtube-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        /*==================================================
+        作者紹介用のレイアウト（PC・スマホ両対応）
+        ==================================================*/
+
+        /* レイアウトの親コンテナ */
+        .profile-layout {
+            display: flex; /* 横並びのレイアウトを有効にする */
+        align-items: center; /* 画像とテキストの縦方向を中央揃えにする */
+            gap: 30px; /* 画像とテキストの間の余白 */
+        }
+
+        /* 左側の画像カラム */
+        .profile-image-column {
+            flex: 1; /* 親コンテナの幅に対して、1の割合で幅を確保 */
+            min-width: 200px; /* 画像が縮みすぎないように最小幅を指定 */
+        }
+
+        /* 右側のテキストカラム */
+        .profile-details-column {
+            flex: 2; /* 親コンテナの幅に対して、2の割合で幅を確保 (テキスト側を広くする) */
+        }
+
+        /* ボタン風のリンク（任意） */
+        .button-like {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .button-like:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
         
         /*==================================================
         フッター
@@ -148,4 +186,8 @@
             .content-grid { flex-direction: column; }
             .hero-title { font-size: 2em; }
             .hero-subtitle { font-size: 1em; }
+            .profile-layout {
+                flex-direction: column; /* 横並びを縦積みに変更 */
+                align-items: flex-start; /* 縦方向の揃えを上揃えに変更 */
+                }
         }
