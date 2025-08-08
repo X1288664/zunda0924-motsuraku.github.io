@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zunda0924-motsuraku.f5.si/sitemap.xml
+Sitemap: https://x1288664.github.io/zunda0924-motsuraku.github.io/sitemap.xml
