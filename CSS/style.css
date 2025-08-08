@@ -146,6 +146,6 @@
             .site-logo img { height: 40px; }
             body { padding-top: 72px; }
             .content-grid { flex-direction: column; }
-            .hero-title { font-size: 2em; }
+            .hero-title { font-size: 25px; }
             .hero-subtitle { font-size: 1em; }
         }
