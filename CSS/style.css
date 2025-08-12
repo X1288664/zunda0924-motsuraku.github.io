@@ -1,3 +1,4 @@
+/* style.css 最終版 */
 /*==================================================
         基本設定
         ==================================================*/
@@ -6,8 +7,21 @@
             --accent-color: #007bff; --border-color: #e0e0e0; --footer-bg-color: #2c3e50;
         }
         * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; color: var(--text-color); background-color: var(--background-color); }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px; /* 基準フォントサイズを固定 */
+        }
+        body {
+            margin: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            /* 日本語の改行を最適化 */
+            line-break: strict;
+            overflow-wrap: break-word;
+            word-break: auto-phrase; /* より自然な改行を目指す（最新のブラウザ向け） */
+        }
         a { color: var(--accent-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
         img { max-width: 100%; height: auto; vertical-align: middle; }
@@ -31,35 +45,31 @@
         .header-inner { display: flex; justify-content: space-between; align-items: center; }
         .site-branding { display: flex; align-items: center; }
         .site-logo img { height: 50px; margin-right: 15px; }
-        .site-title { font-size: 1.5em; font-weight: bold; margin: 0; }
-        .site-description { font-size: 0.9em; color: #777; margin: 0; }
+        .site-title {
+            font-size: 1.5em;
+            font-weight: bold; margin: 0;
+        }
+        .site-description {
+            font-size: 0.8em;
+            color: #777; margin: 0;
+        }
 
         /*==================================================
-        ナビゲーション (変更箇所)
+        ナビゲーション
         ==================================================*/
         .main-navigation { position: relative; }
-        
-        /* ▼▼▼ [メニュー▼]ボタンのスタイル ▼▼▼ */
         .menu-toggle {
-            display: block;
-            border: 1px solid var(--border-color);
-            background: transparent;
-            color: var(--text-color);
-            font-size: 0.9em; /* 文字サイズを少し調整 */
-            font-weight: bold;
-            font-family: 'Noto Sans JP', sans-serif;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
+            display: block; border: 1px solid var(--border-color);
+            background: transparent; color: var(--text-color);
+            font-size: 0.9em;
+            font-weight: bold; font-family: 'Noto Sans JP', sans-serif;
+            padding: 8px 15px; border-radius: 6px; cursor: pointer;
             transition: background-color 0.2s, color 0.2s;
         }
         .menu-toggle:hover, .menu-toggle.is-active {
             background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #fff;
+            border-color: var(--accent-color); color: #fff;
         }
-        /* ▲▲▲ [メニュー▼]ボタンのスタイル ▲▲▲ */
-        
         .menu-container {
             display: block; position: absolute; top: calc(100% + 10px); right: 0;
             width: 200px; background-color: white; border-radius: 8px;
@@ -69,7 +79,7 @@
         }
         .menu-container a { display: block; padding: 12px 20px; }
         .menu-container.is-open { opacity: 1; transform: translateY(0); visibility: visible; }
-        
+
         /*==================================================
         キービジュアル (index.htmlのみ)
         ==================================================*/
@@ -81,133 +91,95 @@
         }
         .hero-fullscreen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
         .hero-content { position: relative; padding: 20px; }
-        .hero-title { font-size: 3em; font-weight: bold; margin-top: 0; margin-bottom: 0.5em; }
-        .hero-subtitle { font-size: 1.2em; margin: 0; max-width: 600px; }
-        
+        .hero-title {
+            font-size: clamp(1.8rem, 8vw, 3rem);
+            font-weight: bold; margin-top: 0; margin-bottom: 0.5em; line-height: 1.4;
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            margin: 0; max-width: 600px;
+        }
+
         /*==================================================
         メインコンテンツ
         ==================================================*/
         .site-content { padding-top: 40px; padding-bottom: 40px; }
         .card { background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
-        .page-title { margin-top: 0; font-size: 2em; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; }
-        .card h2 { margin-top: 0; font-size: 1.6em; }
+        .page-title {
+            margin-top: 0;
+            font-size: clamp(1.6rem, 7vw, 2rem);
+            border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px;
+        }
+        .card h2 {
+            margin-top: 0;
+            font-size: clamp(1.4rem, 6vw, 1.6rem);
+        }
 
         /* --- index.html用 --- */
-        .content-grid { display: flex; gap: 30px;
-                        /*align-items: flex-start; スティッキーサイドバーを有効にするにはコメントアウトを消す */ }
+        .content-grid { display: flex; gap: 30px; }
         .main-column { flex: 3; }
-        .sidebar-column {   flex: 1;
-                            /*position: sticky;  スティッキーサイドバーを有効にするにはコメントアウトを消す */
-                            /*top: 97px; スティッキーサイドバーを有効にするにはコメントアウトを消す */ }
+        .sidebar-column { flex: 1; }
         .full-bleed-image { border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
         .sidebar-widget { margin-bottom: 30px; }
-        .sidebar-widget h3 { font-size: 1.2em; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); margin-top: 0; margin-bottom: 15px; }
+        .sidebar-widget h3 {
+            font-size: clamp(1.15rem, 5vw, 1.2rem);
+            padding-bottom: 10px; border-bottom: 1px solid var(--border-color); margin-top: 0; margin-bottom: 15px;
+        }
         .sidebar-widget ul { list-style: none; padding: 0; }
         .sidebar-widget ul li a { display: block; padding: 8px 0; }
         .update-list { list-style: none; padding-left: 0; }
         .update-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
         .update-list li:last-child { border-bottom: none; }
-        
+
         /* --- products.html用 --- */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .grid-item { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s ease; }
         .grid-item:hover { transform: translateY(-5px); }
         .grid-item-content { padding: 15px; }
-        .grid-item-content h3 { margin-top: 0; margin-bottom: 10px; font-size: 1.1em; }
-        .grid-item-content p { margin: 0; font-size: 0.9em; color: #666; }
+        .grid-item-content h3 {
+            margin-top: 0; margin-bottom: 10px;
+            font-size: 1.15em;
+        }
+        .grid-item-content p {
+            margin: 0; color: #666;
+            font-size: 0.9em;
+        }
         
-        /* --- Server-info.html用ここから --- */
-        /* ---改行用途で流用可 ---*/
-        .text-pre-line { white-space: pre-line; line-height: 1.8; }
-        /*↑改行用*/
-
+        /* --- Server-info.html用 --- */
         .server-spec-list { list-style: none; padding-left: 0; }
         .server-spec-list > li { margin-bottom: 10px; }
-        /* --- Server-info.html用ここまで --- */
         
         /* --- 共通コンポーネント --- */
         .youtube-container { position: relative; width: 100%; height: 0; padding-bottom: 56.25%; overflow: hidden; background-color: #000; }
         .youtube-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-        /*==================================================
-        作者紹介用のレイアウト（PC・スマホ両対応）
-        ==================================================*/
+        /* --- プロフィール用レイアウト --- */
+        .profile-layout { display: flex; align-items: center; gap: 30px; }
+        .profile-image-column { flex: 1; min-width: 200px; }
+        .profile-details-column { flex: 2; }
 
-        /* レイアウトの親コンテナ */
-        .profile-layout {
-            display: flex; /* 横並びのレイアウトを有効にする */
-        align-items: center; /* 画像とテキストの縦方向を中央揃えにする */
-            gap: 30px; /* 画像とテキストの間の余白 */
-        }
+        /* --- ボタン風リンク --- */
+        .button-like { display: inline-block; background-color: var(--accent-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 15px; font-weight: bold; }
+        .button-like:hover { opacity: 0.8; text-decoration: none; }
 
-        /* 左側の画像カラム */
-        .profile-image-column {
-            flex: 1; /* 親コンテナの幅に対して、1の割合で幅を確保 */
-            min-width: 200px; /* 画像が縮みすぎないように最小幅を指定 */
-        }
+        /* --- ロゴと説明文のレイアウト --- */
+        .tech-layout { display: flex; align-items: center; gap: 20px; }
+        .tech-logo-column { flex-basis: 100px; flex-shrink: 0; }
+        .tech-description-column { flex: 1; }
 
-        /* 右側のテキストカラム */
-        .profile-details-column {
-            flex: 2; /* 親コンテナの幅に対して、2の割合で幅を確保 (テキスト側を広くする) */
-        }
-
-        /* ボタン風のリンク（任意） */
-        .button-like {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        .button-like:hover {
-            opacity: 0.8;
-            text-decoration: none;
-        }
-
-/*==================================================
- ロゴと説明文のレイアウト用
-==================================================*/
-.tech-layout {
-    display: flex;
-    align-items: center; /* 画像とテキストを縦方向中央揃え */
-    gap: 20px; /* 画像とテキストの間の余白 */
-}
-
-/* ロゴ画像を入れるカラム */
-.tech-logo-column {
-    flex-basis: 100px; /* ロゴのカラム幅を100pxに固定 */
-    flex-shrink: 0; /* 親要素が縮んでもロゴカラムの幅は維持 */
-}
-
-/* 説明文を入れるカラム */
-.tech-description-column {
-    flex: 1; /* 残りの幅をすべて説明文のカラムが使う */
-}
-
-        /*==================================================
-        注意書きボックス用のスタイル
-        ==================================================*/
-        .notice-box {
-            background-color: #fffbe6; /* 背景を薄い黄色に */
-            border: 1px solid #ffe58f;  /* 枠線を黄色に */
-            border-left: 5px solid #faad14; /* 左の枠線だけ太くして強調 */
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
+        /* --- 注意書きボックス --- */
+        .notice-box { background-color: #fffbe6; border: 1px solid #ffe58f; border-left: 5px solid #faad14; border-radius: 8px; padding: 20px; margin-top: 30px; margin-bottom: 30px; }
         .notice-box h3 {
-            margin-top: 0;
-            color: #d46b08; /* 見出しの文字を濃いオレンジ色に */
+            margin-top: 0; color: #d46b08;
+            font-size: 1.15em;
         }
-        
+
         /*==================================================
         フッター
         ==================================================*/
-        .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center; font-size: 0.9em; }
+        .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center;
+            font-size: 0.9em;
+        }
         .footer-links { margin-bottom: 15px; }
         .footer-links a { color: #fff; margin: 0 10px; }
         .footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
@@ -216,54 +188,12 @@
         /*==================================================
         レスポンシブ対応
         ==================================================*/
-
-@media (max-width: 768px) {
-    .site-title { font-size: 1.2em; }
-    .site-logo img { height: 40px; }
-    body {
-        padding-top: 72px;
-        font-size: 15px; /* ①：本文の基本文字サイズを少し小さくする */
-    }
-    .content-grid { flex-direction: column; }
-
-    /* --- ↓↓↓ 文字サイズ調整コード ↓↓↓ --- */
-
-    /* ②：キービジュアル */
-    .hero-title {
-        font-size: 1.6em;
-        line-height: 1.4;
-    }
-    .hero-subtitle {
-        font-size: 0.9em;
-    }
-
-    /* ③：各ページのメインタイトル (例:「SNSなど」) */
-    .page-title {
-        font-size: 1.6em;
-    }
-
-    /* ④：カード内の見出し (例:「もつ楽公式サイトへようこそ!」) */
-    .card h2 {
-        font-size: 1.4em;
-    }
-
-    /* ⑤：サイドバーや注意書きの見出し (例:「SNS」「【重要】」) */
-    .sidebar-widget h3,
-    .notice-box h3 {
-        font-size: 1.15em;
-    }
-
-    /* --- ↑↑↑ 文字サイズ調整コードここまで ↑↑↑ --- */
-
-    .profile-layout {
-        flex-direction: column; /* 横並びを縦積みに変更 */
-        align-items: flex-start; /* 縦方向の揃えを上揃えに変更 */
-    }
-    .tech-layout {
-        flex-direction: column;     /* 横並びを縦積みに変更 */
-        align-items: flex-start;  /* 上揃えにする */
-    }
-    .tech-logo-column {
-        margin-bottom: 15px; /* 画像とテキストの間に余白を追加 */
-    }
-}
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.2em; }
+            .site-logo img { height: 40px; }
+            body { padding-top: 72px; }
+            .content-grid { flex-direction: column; }
+            .profile-layout { flex-direction: column; align-items: flex-start; }
+            .tech-layout { flex-direction: column; align-items: flex-start; }
+            .tech-logo-column { margin-bottom: 15px; }
+        }
