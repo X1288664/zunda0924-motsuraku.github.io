@@ -216,27 +216,54 @@
         /*==================================================
         レスポンシブ対応
         ==================================================*/
-        @media (max-width: 768px) {
-            .site-title { font-size: 1.2em; }
-            .site-logo img { height: 40px; }
-            body { padding-top: 72px; }
-            .content-grid { flex-direction: column; }
-    .hero-title { 
-        font-size: 1.6em; /* PC用の3em、既存の2emから更に小さく調整 */
-        line-height: 1.4; /* 行間も少し調整 */
+
+@media (max-width: 768px) {
+    .site-title { font-size: 1.2em; }
+    .site-logo img { height: 40px; }
+    body {
+        padding-top: 72px;
+        font-size: 15px; /* ①：本文の基本文字サイズを少し小さくする */
     }
-    .hero-subtitle { 
-        font-size: 0.9em; /* 既存の1emから少し小さく調整 */
+    .content-grid { flex-direction: column; }
+
+    /* --- ↓↓↓ 文字サイズ調整コード ↓↓↓ --- */
+
+    /* ②：キービジュアル */
+    .hero-title {
+        font-size: 1.6em;
+        line-height: 1.4;
     }
-            .profile-layout {
-                flex-direction: column; /* 横並びを縦積みに変更 */
-                align-items: flex-start; /* 縦方向の揃えを上揃えに変更 */
-                }
-        .tech-layout {
-            flex-direction: column;     /* 横並びを縦積みに変更 */
-            align-items: flex-start;  /* 上揃えにする */
-        }
-        .tech-logo-column {
-            margin-bottom: 15px; /* 画像とテキストの間に余白を追加 */
-        }
-        }
+    .hero-subtitle {
+        font-size: 0.9em;
+    }
+
+    /* ③：各ページのメインタイトル (例:「SNSなど」) */
+    .page-title {
+        font-size: 1.6em;
+    }
+
+    /* ④：カード内の見出し (例:「もつ楽公式サイトへようこそ!」) */
+    .card h2 {
+        font-size: 1.4em;
+    }
+
+    /* ⑤：サイドバーや注意書きの見出し (例:「SNS」「【重要】」) */
+    .sidebar-widget h3,
+    .notice-box h3 {
+        font-size: 1.15em;
+    }
+
+    /* --- ↑↑↑ 文字サイズ調整コードここまで ↑↑↑ --- */
+
+    .profile-layout {
+        flex-direction: column; /* 横並びを縦積みに変更 */
+        align-items: flex-start; /* 縦方向の揃えを上揃えに変更 */
+    }
+    .tech-layout {
+        flex-direction: column;     /* 横並びを縦積みに変更 */
+        align-items: flex-start;  /* 上揃えにする */
+    }
+    .tech-logo-column {
+        margin-bottom: 15px; /* 画像とテキストの間に余白を追加 */
+    }
+}
