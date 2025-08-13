@@ -12,6 +12,11 @@
             scroll-behavior: smooth;
             font-size: 16px; /* 基準フォントサイズを固定 */
         }
+
+        html {
+        font-size: 16px; /* 基準の文字サイズ */
+        }
+
         body {
             margin: 0;
             font-family: 'Noto Sans JP', sans-serif;
@@ -22,6 +27,11 @@
             overflow-wrap: break-word;
             word-break: auto-phrase; /* より自然な改行を目指す（最新のブラウザ向け） */
         }
+
+        /* レスポンシブ改行用のクラス */
+        .br-mobile { display: none; } /* PCでは非表示 */
+        .br-pc { display: none; }     /* モバイルでは非表示 */
+
         a { color: var(--accent-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
         img { max-width: 100%; height: auto; vertical-align: middle; }
@@ -92,12 +102,12 @@
         .hero-fullscreen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
         .hero-content { position: relative; padding: 20px; }
         .hero-title {
-            font-size: clamp(1.8rem, 8vw, 3rem);
-            font-weight: bold; margin-top: 0; margin-bottom: 0.5em; line-height: 1.4;
+        font-size: 2.5rem; /* サイズ変更 */
+        font-weight: 700;  /* 太さを追加 */
+        line-height: 1.3;
         }
         .hero-subtitle {
-            font-size: clamp(1rem, 4vw, 1.2rem);
-            margin: 0; max-width: 600px;
+             font-size: 1.25rem; /* サイズ変更 */
         }
 
         /*==================================================
@@ -106,14 +116,25 @@
         .site-content { padding-top: 40px; padding-bottom: 40px; }
         .card { background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
         .page-title {
-            margin-top: 0;
-            font-size: clamp(1.6rem, 7vw, 2rem);
-            border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px;
+        font-size: 1.75rem; /* サイズ変更 */
+        font-weight: 700;   /* 太さを追加 */
+        /* (他のスタイルはそのまま) */
         }
         .card h2 {
-            margin-top: 0;
-            font-size: clamp(1.4rem, 6vw, 1.6rem);
+        font-size: 1.5rem; /* サイズ変更 */
+        font-weight: 700;  /* 太さを追加 */
+        /* (他のスタイルはそのまま) */
         }
+
+        .card p {
+        font-size: 1rem; /* サイズを明確化 */
+        line-height: 1.7;
+        letter-spacing: 0.02em;
+        }
+
+        .card p a {
+    display: inline-block; /* リンクをブロックのように扱い、改行後のズレを防止します */
+}
 
         /* --- index.html用 --- */
         .content-grid { display: flex; gap: 30px; }
@@ -188,12 +209,24 @@
         /*==================================================
         レスポンシブ対応
         ==================================================*/
+        /*モバイル向け*/
         @media (max-width: 768px) {
+            html {font-size: 15px; /* スマホでの基準サイズを追加 */}
             .site-title { font-size: 1.2em; }
             .site-logo img { height: 40px; }
-            body { padding-top: 72px; }
+            body { padding-top: 72px; 
+            font-size: 15px; /* スマホでの基準フォントサイズを少しだけ小さくする */}
             .content-grid { flex-direction: column; }
             .profile-layout { flex-direction: column; align-items: flex-start; }
             .tech-layout { flex-direction: column; align-items: flex-start; }
             .tech-logo-column { margin-bottom: 15px; }
+            .br-mobile { display: block; }/* スマホ専用の改行 */
+            .hero-title {font-size: 1.8rem;}
+            .page-title {font-size: 1.6rem;}
+            .card h2 {font-size: 1.4rem;}
+        }
+
+        /*PC向け*/
+        @media(min-width: 769px){
+            .br-pc {display: block; }/* PC専用の改行 */
         }
