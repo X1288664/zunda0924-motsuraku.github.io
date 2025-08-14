@@ -20,6 +20,10 @@
 .sidebar-column .sidebar-widget:nth-of-type(1) { order: 1; } /* SNS order: 順序  */
 .sidebar-column .sidebar-widget:nth-of-type(2) { order: 2; } /* Navigate order: 順序   */
 .sidebar-column .sidebar-widget:nth-of-type(3) { order: 3; } /* LINE order: 順序   */
+/* --- メインコンテンツ内の各項目の順番 --- */
+.main-column > .card:nth-child(1) { order: 1; } /* 1番目の子要素（ようこそ） */
+.main-column > .card:nth-child(2) { order: 2; } /* 2番目の子要素（フィードバック） */
+.main-column > .card:nth-child(3) { order: 3; } /* 3番目の子要素（重要） */
 
 
 /* --- スマートフォン表示での順番の上書き --- */
@@ -32,6 +36,10 @@
     .sidebar-column .sidebar-widget:nth-of-type(1) { order: 1; } /* SNS */
     .sidebar-column .sidebar-widget:nth-of-type(2) { order: 2; } /* Navigate */
     .sidebar-column .sidebar-widget:nth-of-type(3) { order: 3; } /* LINE */
+/* --- メインコンテンツ内の各項目の順番 --- */
+.main-column > .card:nth-child(1) { order: 1; } /* 1番目の子要素（ようこそ） */
+.main-column > .card:nth-child(2) { order: 2; } /* 2番目の子要素（フィードバック） */
+.main-column > .card:nth-child(3) { order: 3; } /* 3番目の子要素（重要） */
 }
 
 
@@ -145,6 +153,9 @@ body { padding-top: 82px; }
 }
 .main-column {
     flex: 3;
+    display: flex;         /* 中の要素を並べ替え可能にする */
+    flex-direction: column;/* 要素を縦に積む */
+    gap: 30px;             /* 各カードの間の隙間を設定 */
 }
 .sidebar-column {
     flex: 1;
@@ -157,7 +168,12 @@ body { padding-top: 82px; }
 }
 /* ここまでレイアウト制御設定 */
 
-.card { background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
+.card { background-color:
+    var(--base-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px; padding: 24px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    margin-bottom: 0; /* gapで管理するため、既存の余白設定を解除 */ }
 .page-title {
     margin-top: 0;
     font-size: 1.75rem;
