@@ -219,6 +219,101 @@ body { padding-top: 82px; }
 .footer-links a { color: #fff; margin: 0 10px; }
 .footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
 .footer-social-icons img:hover { opacity: 1; }
+/*==================================================
+メンバー紹介ページ
+==================================================*/
+.member-grid {
+    /* --- ★PCでの列数をここで変更 --- */
+    --grid-columns: 3;
+
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    gap: 20px;
+}
+
+.member-card {
+    display: block;
+    color: var(--text-color);
+    text-decoration: none;
+    background-color: var(--base-color);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--border-color);
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.member-thumbnail img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; /* サムネイルの比率を16:9に */
+    object-fit: cover; /* 画像が比率を保ったままフィットするように */
+    background-color: #eee;
+}
+
+.member-info {
+    padding: 15px;
+}
+
+.member-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.member-description {
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+}
+
+/* 誘導ボックス用のスタイル */
+.promo-card {
+    background-color: #e9f5ff; /* 少し色をつけた背景 */
+    text-align: center;
+}
+/* style.cssに追記 */
+
+/*==================================================
+ページネーション
+==================================================*/
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* スマホで改行されるように */
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.pagination-container a {
+    display: block;
+    padding: 8px 15px;
+    border: 1px solid var(--border-color);
+    background-color: var(--base-color);
+    color: var(--accent-color);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: bold;
+}
+
+.pagination-container a:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+
+.pagination-container a.active {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    cursor: default;
+}
 
 @media (max-width: 768px) {
     html {
@@ -249,5 +344,11 @@ body { padding-top: 82px; }
 @media (max-width: 768px) {
     .br-mobile {
         display: inline;
+    }
+
+    /* メンバー紹介ページのスマホ用レイアウト */
+    .member-grid {
+        /* --- ★スマホでの列数をここで変更 --- */
+        --grid-columns: 1;
     }
 }
