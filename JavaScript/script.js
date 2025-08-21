@@ -15,25 +15,38 @@ if (siteHeader) {
 }
 
 
+// script.js のナビゲーション部分
+
 // --- ナビゲーションメニューの表示切り替え ---
 const menuToggle = document.querySelector('.menu-toggle');
 const menuContainer = document.querySelector('.menu-container');
 
 // トグルボタンとメニューコンテナが存在する場合のみイベントリスナーを設定
 if (menuToggle && menuContainer) {
+    // ▼▼▼ このイベントリスナー全体を置き換えます ▼▼▼
     menuToggle.addEventListener('click', (e) => {
-        // イベントの伝播を停止し、下のdocumentクリックイベントが発火しないようにする
-        e.stopPropagation();
-        menuContainer.classList.toggle('is-open');
+        e.stopPropagation(); // 親要素へのイベント伝播を停止
+        
+        // is-openクラスを付け外しする
+        const isOpen = menuContainer.classList.toggle('is-open');
+
+        // クラスの状態に応じてボタンのテキストを変更
+        if (isOpen) {
+            menuToggle.innerHTML = 'メニュー▲';
+        } else {
+            menuToggle.innerHTML = 'メニュー▼';
+        }
     });
 
     // --- メニュー外をクリックで閉じる ---
     document.addEventListener('click', (e) => {
-        // メニュー本体とトグルボタン以外をクリックした場合
-        if (!e.target.closest('.main-navigation')) {
+        // メニューが開いている、かつ、クリックした場所がメニューの外の場合
+        if (menuContainer.classList.contains('is-open') && !e.target.closest('.main-navigation')) {
             menuContainer.classList.remove('is-open');
+            menuToggle.innerHTML = 'メニュー▼'; // ボタンのテキストを元に戻す
         }
     });
+    // ▲▲▲ ここまで置き換え ▲▲▲
 
     // --- メニュー内をクリックしても閉じないようにする ---
     menuContainer.addEventListener('click', (e) => {
