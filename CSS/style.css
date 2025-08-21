@@ -57,6 +57,7 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
     color: var(--text-color);
     background-color: var(--background-color);
+    overflow-x: hidden;
 }
 a { color: var(--accent-color); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -190,11 +191,112 @@ body { padding-top: 82px; }
 .grid-item-content, .member-info { padding: 15px; }
 .grid-item-content h3, .member-name { font-size: 1.1em; font-weight: bold; margin: 0 0 5px 0; }
 .grid-item-content p, .member-description { font-size: 0.9em; color: #666; margin: 0; }
+/* style.css に追記 */
 
-/* ページネーション */
-.pagination-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
-.pagination-container a { padding: 8px 15px; border: 1px solid var(--border-color); background-color: var(--base-color); color: var(--accent-color); border-radius: 6px; font-weight: bold; }
-.pagination-container a:hover, .pagination-container a.active { background-color: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+/*==================================================
+イラストギャラリー & ライトボックス
+==================================================*/
+/* ギャラリーのグリッド設定 */
+.illustration-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* ライトボックスの背景 */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px; /* ★ 周囲に余白を追加 */
+}
+
+/* ライトボックスの画像コンテナ */
+.lightbox-image-container {
+    max-width: 50%; /* ★ 画像の最大幅を調整 */
+    max-height: 50%; /* ★ 画像の最大高さを調整 */
+    display: flex; /* ★ 画像を中央に配置するためのFlexbox */
+    justify-content: center; /* ★ 水平方向中央揃え */
+    align-items: center; /* ★ 垂直方向中央揃え */
+}
+
+.lightbox-image-container img {
+    display: block; /* ★ インライン要素の余白問題を解消 */
+    max-width: 100%; /* ★ 親要素（コンテナ）の幅を超えないように */
+    max-height: 100%; /* ★ 親要素（コンテナ）の高さを超えないように */
+    object-fit: contain; /* ★ アスペクト比を維持し、全体を収める */
+    margin: auto; /* ★ Flexboxの子要素を中央に配置 */
+    border-radius: 8px; /* 必要であれば */
+}
+
+/* 閉じるボタン */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1; /* 画像より手前に表示 */
+}
+
+/*==================================================
+ページネーション
+==================================================*/
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* スマホで改行されるように */
+    gap: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px; /* ← 下の余白を追加 */
+}
+
+.pagination-container a {
+    display: block;
+    padding: 8px 15px;
+    border: 1px solid var(--border-color);
+    background-color: var(--base-color);
+    color: var(--accent-color);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: bold;
+}
+
+.pagination-container a:hover,
+.pagination-container a.active {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    cursor: default;
+}
 
 /* サイドバー */
 .sidebar-widget ul { list-style: none; padding: 0; }

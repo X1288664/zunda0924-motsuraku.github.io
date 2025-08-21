@@ -124,3 +124,66 @@ if (memberGrid && paginationContainer) {
     }
     showPage(1);
 }
+/* script.js に追記 */
+
+/*==================================================
+イラストギャラリー・ライトボックス機能
+==================================================*/
+const gallery = document.querySelector('.illustration-gallery');
+
+// ギャラリーが存在するページでのみ実行
+if (gallery) {
+    gallery.addEventListener('click', function(e) {
+        // クリックされたのがギャラリー内のリンクか確認
+        const imageLink = e.target.closest('.gallery-item');
+        if (!imageLink) {
+            return;
+        }
+
+        // リンクのデフォルト動作（ページ遷移）をキャンセル
+        e.preventDefault();
+
+        const largeImageUrl = imageLink.getAttribute('href');
+
+        // ライトボックスの要素を作成
+        const lightboxOverlay = document.createElement('div');
+        lightboxOverlay.className = 'lightbox-overlay';
+
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'lightbox-image-container';
+
+        const largeImage = document.createElement('img');
+        largeImage.src = largeImageUrl;
+
+        const closeButton = document.createElement('a');
+        closeButton.className = 'lightbox-close';
+        closeButton.innerHTML = '&times;'; // ×記号
+
+        // 要素を組み立て
+        imageContainer.appendChild(largeImage);
+        lightboxOverlay.appendChild(imageContainer);
+        lightboxOverlay.appendChild(closeButton);
+
+        // bodyにライトボックスを追加
+        document.body.appendChild(lightboxOverlay);
+
+        // フェードインさせる
+        setTimeout(() => {
+            lightboxOverlay.style.opacity = '1';
+        }, 10);
+
+        // 閉じる機能
+        function closeLightbox() {
+            lightboxOverlay.style.opacity = '0';
+            setTimeout(() => {
+                // 要素がまだ存在する場合のみ削除
+                if (document.body.contains(lightboxOverlay)) {
+                    document.body.removeChild(lightboxOverlay);
+                }
+            }, 300); // CSSのtransitionの時間と合わせる
+        }
+
+        // クリックで閉じるイベントを設定
+        lightboxOverlay.addEventListener('click', closeLightbox);
+    });
+}
