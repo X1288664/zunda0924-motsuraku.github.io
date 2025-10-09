@@ -187,3 +187,31 @@ if (gallery) {
         lightboxOverlay.addEventListener('click', closeLightbox);
     });
 }
+
+/*==================================================
+スクロールに応じたアニメーション機能
+==================================================*/
+document.addEventListener('DOMContentLoaded', () => {
+    // 監視対象の要素をすべて取得
+    const animatedElements = document.querySelectorAll('.card, .sidebar-widget');
+
+    // 監視用のオブザーバーを作成
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // 要素が画面内に入ったら is-visible クラスを付与
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // 一度表示したら監視を停止
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        // 要素が画面に10%入った時点で実行
+        threshold: 0.1
+    });
+
+    // 各要素の監視を開始
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+});
