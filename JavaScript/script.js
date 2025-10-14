@@ -188,17 +188,18 @@ if (gallery) {
     });
 }
 
+/* script.js にこのブロックのみを記述 */
+
 /*==================================================
 スクロールに応じたアニメーション機能
 ==================================================*/
 document.addEventListener('DOMContentLoaded', () => {
     // 監視対象の要素をすべて取得
     const animatedElements = document.querySelectorAll('.card, .sidebar-widget');
-
     // 監視用のオブザーバーを作成
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            // 要素が画面内に入ったら is-visible クラスを付与
+            // 要素が画面内に入ったら is-visible クlasスを付与
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
                 // 一度表示したら監視を停止
@@ -209,9 +210,114 @@ document.addEventListener('DOMContentLoaded', () => {
         // 要素が画面に10%入った時点で実行
         threshold: 0.1
     });
-
     // 各要素の監視を開始
     animatedElements.forEach(element => {
         observer.observe(element);
     });
 });
+
+/* ▼▼▼ このブロック全体を置き換える ▼▼▼ */
+/*==================================================
+ギャラリースライダー機能
+==================================================*/
+document.addEventListener('DOMContentLoaded', () => {
+    const gallery = document.querySelector('.gallery-container');
+    if (!gallery) return;
+
+    const track = gallery.querySelector('.gallery-track');
+    const slides = Array.from(track.children);
+    const nextButton = gallery.querySelector('.gallery-btn.next');
+    const prevButton = gallery.querySelector('.gallery-btn.prev');
+    const dotsNav = gallery.querySelector('.gallery-dots');
+    const timerBar = gallery.querySelector('.gallery-timer-bar');
+
+    if (slides.length === 0) return; // スライドがなければ何もしない
+
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    let currentIndex = 0;
+    let autoPlayInterval;
+
+    const moveToSlide = (targetIndex) => {
+        // スライドが1枚しかない場合は何もしない
+        if (slides.length <= 1) return;
+        track.style.transform = 'translateX(-' + slideWidth * targetIndex + 'px)';
+        currentIndex = targetIndex;
+        updateDots(targetIndex);
+        resetTimerAnimation();
+    };
+    
+    slides.forEach((slide, index) => {
+        const dot = document.createElement('button');
+        dot.classList.add('gallery-dot');
+        dotsNav.appendChild(dot);
+        dot.addEventListener('click', () => {
+            moveToSlide(index);
+            resetAutoPlay();
+        });
+    });
+    const dots = Array.from(dotsNav.children);
+    
+    const updateDots = (targetIndex) => {
+        dots.forEach(dot => dot.classList.remove('active'));
+        if(dots[targetIndex]) {
+            dots[targetIndex].classList.add('active');
+        }
+    };
+
+    const resetTimerAnimation = () => {
+        timerBar.classList.remove('is-animating');
+        void timerBar.offsetWidth; 
+        timerBar.classList.add('is-animating');
+    };
+
+    const startAutoPlay = () => {
+        // スライドが1枚しかない場合は自動再生しない
+        if (slides.length <= 1) return;
+        
+        clearInterval(autoPlayInterval); // 既存のタイマーをクリア
+        autoPlayInterval = setInterval(() => {
+            let nextIndex = currentIndex + 1;
+            if (nextIndex >= slides.length) {
+                nextIndex = 0; // ループ
+            }
+            moveToSlide(nextIndex);
+        }, 5000);
+    };
+
+    const resetAutoPlay = () => {
+        clearInterval(autoPlayInterval);
+        startAutoPlay();
+    };
+
+    nextButton.addEventListener('click', () => {
+        let nextIndex = currentIndex + 1;
+        if (nextIndex >= slides.length) nextIndex = 0;
+        moveToSlide(nextIndex);
+        resetAutoPlay();
+    });
+
+    prevButton.addEventListener('click', () => {
+        let prevIndex = currentIndex - 1;
+        if (prevIndex < 0) prevIndex = slides.length - 1;
+        moveToSlide(prevIndex);
+        resetAutoPlay();
+    });
+
+    // ▼▼▼ ホバーで停止する機能を追加 ▼▼▼
+    gallery.addEventListener('mouseenter', () => {
+        clearInterval(autoPlayInterval);
+        timerBar.classList.remove('is-animating'); // アニメーションも停止
+    });
+
+    gallery.addEventListener('mouseleave', () => {
+        resetAutoPlay();
+        resetTimerAnimation(); // アニメーションも再開
+    });
+    // ▲▲▲ ここまで追加 ▲▲▲
+
+    // 初期化
+    updateDots(0);
+    startAutoPlay();
+    resetTimerAnimation();
+});
+/* ▲▲▲ 置き換えここまで ▲▲▲ */
