@@ -1,44 +1,29 @@
-/* style.css (完全再構築版) */
+/* style.css (最終クリーンナップ版) */
 
 /*
 ==================================================
 表示順序コントロールパネル
 ==================================================
-ここの order の数字を変更するだけで、各項目の表示順を簡単に入れ替えられます。
-数字が小さいものから順に表示されます。（例: 1, 2, 3, ...）
 */
-
-/* --- ページ全体のブロックの順番 (index.html) --- */
 .hero-fullscreen { order: 1; }
 .content-grid-container { order: 2; }
-
-/* --- メインコンテンツとサイドバーの順番 (PC) --- */
 .main-column { order: 1; }
 .sidebar-column { order: 2; }
-
-/* --- サイドバー内の各項目の順番 (PC) --- */
-.sidebar-column .sidebar-widget:nth-of-type(1) { order: 1; } /* SNS */
-.sidebar-column .sidebar-widget:nth-of-type(2) { order: 2; } /* Navigate */
-.sidebar-column .sidebar-widget:nth-of-type(3) { order: 3; } /* LINE */
-
-/* --- メインコンテンツ内の各項目の順番 (PC) --- */
-.main-column > .card:nth-child(1) { order: 1; } /* ようこそ */
-.main-column > .card:nth-child(2) { order: 2; } /* フィードバック */
-.main-column > .card:nth-child(3) { order: 3; } /* 重要 */
-.main-column > .card:nth-child(4) { order: 4; } /* メンバー紹介(promo-card) */
-
-
-/* --- スマートフォン表示での順番の上書き --- */
+.sidebar-column .sidebar-widget:nth-of-type(1) { order: 1; }
+.sidebar-column .sidebar-widget:nth-of-type(2) { order: 2; }
+.sidebar-column .sidebar-widget:nth-of-type(3) { order: 3; }
+.main-column > .card:nth-child(1) { order: 1; }
+.main-column > .card:nth-child(2) { order: 2; }
+.main-column > .card:nth-child(3) { order: 3; }
+.main-column > .card:nth-child(4) { order: 4; }
 @media (max-width: 768px) {
-    /* スマホではサイドバーを先に表示 */
     .main-column { order: 1; }
     .sidebar-column { order: 2; }
 }
 
-
 /*
 ==================================================
-ここから下はサイトデザインのスタイルです
+サイトデザインのスタイル
 ==================================================
 */
 /* --- 基本設定 --- */
@@ -47,18 +32,10 @@
     --accent-color: #007bff; --border-color: #e0e0e0; --footer-bg-color: #2c3e50;
 }
 * { box-sizing: border-box; }
-
-html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-}
+html { font-size: 16px; scroll-behavior: smooth; }
 body {
-    margin: 0;
-    font-family: 'Noto Sans JP', sans-serif;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    overflow-x: hidden;
-    font-family: 'Noto Sans JP', sans-serif; /* ← この一行を追加 */
+    margin: 0; font-family: 'Noto Sans JP', sans-serif; color: var(--text-color);
+    background-color: var(--background-color); overflow-x: hidden; padding-top: 82px;
 }
 a { color: var(--accent-color); text-decoration: none; }
 a:hover { text-decoration: underline; }
@@ -76,7 +53,6 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
     background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
-body { padding-top: 82px; }
 .header-inner { display: flex; justify-content: space-between; align-items: center; }
 .site-branding { display: flex; align-items: center; }
 .site-logo img { height: 50px; margin-right: 15px; }
@@ -86,174 +62,93 @@ body { padding-top: 82px; }
 /* --- ナビゲーション --- */
 .main-navigation { position: relative; }
 .menu-toggle {
-    display: block; border: 1px solid var(--border-color);
-    background: transparent; color: var(--text-color);
-    font-size: 0.9em; font-weight: bold; font-family: 'Noto Sans JP', sans-serif;
-    padding: 8px 15px; border-radius: 6px; cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
+    display: block; border: 1px solid var(--border-color); background: transparent;
+    color: var(--text-color); font-size: 0.9em; font-weight: bold;
+    font-family: 'Noto Sans JP', sans-serif; padding: 8px 15px;
+    border-radius: 6px; cursor: pointer; transition: background-color 0.2s, color 0.2s;
 }
 .menu-toggle:hover, .menu-toggle.is-active { background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; }
-/* style.css のナビゲーションセクション */
-
 .menu-container {
-    display: block; /* display: none; から変更 */
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    width: 200px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    padding: 10px 0;
-
-    /* ▼▼▼ アニメーション用の設定を追加 ▼▼▼ */
-    opacity: 0;
-    transform: translateY(10px);
-    visibility: hidden;
+    display: block; position: absolute; top: calc(100% + 10px); right: 0;
+    width: 200px; background-color: white; border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15); padding: 10px 0;
+    opacity: 0; transform: translateY(10px); visibility: hidden;
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
-
-.menu-container.is-open {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-}
+.menu-container.is-open { opacity: 1; transform: translateY(0); visibility: visible; }
 .menu-container a { display: block; padding: 12px 20px; }
 
-/* --- メインコンテンツ --- */
-.site-content {
-    display: flex;
-    flex-direction: column;
-}
+/* --- メインビジュアル --- */
 .hero-fullscreen {
-    position: relative; width: 100%; height: calc(70vh - 82px);
-    min-height: 100%; color: #fff; background-size: cover; background-position: center;
-    display: flex; align-items: center; justify-content: center; text-align: center;
+    position: relative; width: 100%; border-radius: 8px; overflow: hidden;
+    aspect-ratio: 1900 / 690; display: flex; align-items: center;
+    justify-content: center; text-align: center; color: #fff;
 }
-/* ▼▼▼ ここから追記 ▼▼▼ */
-/* --- ヒーローセクションの動画背景 --- */
-.hero-video-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1; /* 文字より後ろ、背景画像より手前に配置 */
+.hero-background-image {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 1;
 }
-
-.hero-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 画面に合わせて動画をトリミング */
+.hero-fullscreen::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); z-index: 2;
 }
-/* ▲▲▲ ここまで追記 ▲▲▲ */
-.hero-fullscreen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
 .hero-content {
     position: relative; padding: 1.5em 2em; background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 12px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px; backdrop-filter: blur(8px); z-index: 3;
 }
 .hero-title { font-size: 2.5rem; font-weight: 700; line-height: 1.3; }
 .hero-subtitle { font-size: 1.25rem; }
 
-/* --- レイアウト設定 (CSS Grid版) --- */
-.content-grid {
-    display: grid;
-    grid-template-columns: 2.5fr 1fr; /* メインとサイドバーの幅の比率 */
-    gap: 30px;
-}
-.main-column {
-    flex: 2.5; /* 幅の比率 */
-    min-width: 0; /* コンテンツが縮小することを許可 */
-}
-.sidebar-column {
-    flex: 1; /* 幅の比率 */
-    min-width: 0; /* コンテンツが縮小することを許可 */
-}
+/* --- レイアウト設定 --- */
+.content-grid { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; }
+.main-column { flex: 2.5; min-width: 0; }
+.sidebar-column { flex: 1; min-width: 0; }
 
 /* --- 汎用コンポーネント --- */
 .card {
-    background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px;
-    padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    background-color: var(--base-color); border: 1px solid var(--border-color);
+    border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04);
 }
 .page-title { margin-top: 0; font-size: 1.75rem; font-weight: 700; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; }
 .card h2 { margin-top: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.4; margin-bottom: 1rem; }
 .card h3 { font-size: 1.2em; margin-top: 0; }
 .card p { font-size: 1rem; line-height: 1.7; letter-spacing: 0.02em; }
 .card p a { display: inline-block; }
-.button-like { display: inline-block; background-color: var(--accent-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 15px; font-weight: bold; }
-.button-like:hover { opacity: 0.8; text-decoration: none; }
-/* style.css の汎用コンポーネントセクションに追記 */
-
-/* --- ボタンの基本スタイル --- */
 .btn {
-    display: inline-block;
-    padding: 12px 28px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    text-align: center;
-    border: 2px solid #007bff; /* 枠線の色 */
-    color: #007bff; /* 文字色 */
-    background-color: transparent; /* 背景は透明 */
+    display: inline-block; padding: 12px 28px; border-radius: 8px; text-decoration: none;
+    font-weight: bold; text-align: center; border: 2px solid #007bff;
+    color: #007bff; background-color: transparent;
 }
-
-/* --- 最重要ボタン（CTA）のスタイル --- */
-.btn-primary {
-    background-color: #007bff; /* 背景色 */
-    color: #ffffff; /* 文字色を白に */
-}
+.btn-primary { background-color: #007bff; color: #ffffff; }
 .button-container { text-align: center; }
 
-/* --- ページごとの特殊スタイル --- */
-
-/* --- スクロールアニメーション用設定 --- */
-/* アニメーション前の状態（透明で、少し下に配置） */
-.card,
-.sidebar-widget {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition-delay: 0.2s; /*フェードインアニメーションタイミング調整(x.xs部分で遅延調整可)*/
+/* --- アニメーションとエフェクト --- */
+.card, .sidebar-widget {
+    opacity: 0; transform: translateY(20px);
+    transition-delay: 0.2s;
 }
-/* style.css に追記 */
-
-/* --- ホバーエフェクト --- */
-/* カードとボタンに適用 */
-.card,
-.btn {
-    /* 動きを滑らかにするための準備 */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.card, .btn { /* ★★★ transition指定をここに統合 ★★★ */
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.3s ease;
 }
-
-/* マウスカーソルが乗った時の変化 */
-.card:hover,
-.btn:hover {
-    /* 少し上に浮き上がる */
+.card:hover, .btn:hover {
     transform: translateY(-5px);
-    /* 影を少し濃く、広げる */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
-
-/* アニメーション後の状態（不透明で、元の位置に） */
-.card.is-visible,
-.sidebar-widget.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+.card.is-visible, .sidebar-widget.is-visible {
+    opacity: 1; transform: translateY(0);
 }
 
-/* プロフィールページ用 */
+/* --- ページごとの特殊スタイル --- */
 .profile-layout { display: flex; align-items: center; gap: 30px; }
 .profile-image-column { flex: 1; min-width: 200px; }
 .profile-details-column { flex: 2; }
-/* サーバー情報ページ用 */
 .tech-layout { display: flex; align-items: center; gap: 20px; }
 .tech-logo-column { flex-basis: 100px; flex-shrink: 0; }
-/* products, membersページ用 */
 .grid-container, .member-grid {
-    --grid-columns: 3;
-    display: grid;
-    grid-template-columns: repeat(var(--grid-columns), 1fr);
-    gap: 20px;
+    --grid-columns: 3; display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr); gap: 20px;
 }
 .grid-item, .member-card {
     display: block; color: var(--text-color); text-decoration: none;
@@ -265,110 +160,51 @@ body { padding-top: 82px; }
 .grid-item-content, .member-info { padding: 15px; }
 .grid-item-content h3, .member-name { font-size: 1.1em; font-weight: bold; margin: 0 0 5px 0; }
 .grid-item-content p, .member-description { font-size: 0.9em; color: #666; margin: 0; }
-/* style.css に追記 */
 
 /*==================================================
-イラストギャラリー & ライトボックス
+イラストギャラリー（最終修正版）
 ==================================================*/
-/* ギャラリーのグリッド設定 */
-.illustration-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
+.gallery-section {
+    width: 100%; padding: 30px 0; margin-top: 50px;
 }
-
-.gallery-item img {
+/* 2. ギャラリー本体の幅と中央配置を決定 */
+.gallery-container {
     width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    transition: transform 0.2s ease;
 }
-.gallery-item:hover img {
-    transform: none; /* ホバー時に拡大させない */
-}
-
-/* ライトボックスの背景 */
-.lightbox-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+.gallery-slider {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 20px; /* ★ 周囲に余白を追加 */
+    overflow: hidden;
+    aspect-ratio: 1900 / 690;
 }
-
-/* ライトボックスの画像コンテナ */
-.lightbox-image-container {
-    max-width: 50%; /* ★ 画像の最大幅を調整 */
-    max-height: 50%; /* ★ 画像の最大高さを調整 */
-    display: flex; /* ★ 画像を中央に配置するためのFlexbox */
-    justify-content: center; /* ★ 水平方向中央揃え */
-    align-items: center; /* ★ 垂直方向中央揃え */
-}
-
-.lightbox-image-container img {
-    display: block; /* ★ インライン要素の余白問題を解消 */
-    max-width: 100%; /* ★ 親要素（コンテナ）の幅を超えないように */
-    max-height: 100%; /* ★ 親要素（コンテナ）の高さを超えないように */
-    object-fit: contain; /* ★ アスペクト比を維持し、全体を収める */
-    margin: auto; /* ★ Flexboxの子要素を中央に配置 */
-    border-radius: 8px; /* 必要であれば */
-}
-
-/* 閉じるボタン */
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: #fff;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1; /* 画像より手前に表示 */
-}
+.gallery-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+.gallery-item { flex: 0 0 100%; min-width: 100%; height: 100%; }
+.gallery-item img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+.gallery-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); padding: 0 0.5rem; }
+.gallery-dots { display: flex; gap: 0.5rem; }
+.gallery-dot { width: 30px; height: 4px; border-radius: 2px; background-color: var(--border-color); cursor: pointer; transition: background-color 0.3s ease; }
+.gallery-dot.active { background-color: var(--accent-color); }
+.gallery-timer { width: 100%; height: 4px; background-color: var(--border-color); border-radius: 2px; margin-top: 0.75rem; overflow: hidden; }
+.gallery-timer-bar { width: 0%; height: 100%; background-color: var(--accent-color); border-radius: 2px; }
+.gallery-timer-bar.is-animating { animation: progressBarAnimation 5s linear forwards; }
+@keyframes progressBarAnimation { from { width: 0%; } to { width: 100%; } }
 
 /*==================================================
 ページネーション
 ==================================================*/
 .pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; /* スマホで改行されるように */
-    gap: 10px;
-    margin-top: 40px;
-    margin-bottom: 40px; /* ← 下の余白を追加 */
+    display: flex; justify-content: center; align-items: center;
+    flex-wrap: wrap; gap: 10px; margin: 40px 0;
 }
-
 .pagination-container a {
-    display: block;
-    padding: 8px 15px;
-    border: 1px solid var(--border-color);
-    background-color: var(--base-color);
-    color: var(--accent-color);
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background-color 0.2s, color 0.2s;
-    font-weight: bold;
+    display: block; padding: 8px 15px; border: 1px solid var(--border-color);
+    background-color: var(--base-color); color: var(--accent-color);
+    text-decoration: none; border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s; font-weight: bold;
 }
-
-.pagination-container a:hover,
-.pagination-container a.active {
-    background-color: var(--accent-color);
-    color: #fff;
-    border-color: var(--accent-color);
-    cursor: default;
+.pagination-container a:hover, .pagination-container a.active {
+    background-color: var(--accent-color); color: #fff;
+    border-color: var(--accent-color); cursor: default;
 }
 
 /* サイドバー */
@@ -384,48 +220,6 @@ body { padding-top: 82px; }
 .update-list li:first-child { padding-top: 0; }
 .update-list li:last-child { border-bottom: none; }
 .text-pre-line { white-space: pre-line; line-height: 1.8; }
-/* style.css に追記 */
-
-/*==================================================
-イラストギャラリー（最終修正版）
-==================================================*/
-/* 1. ギャラリーセクションの背景と上下の余白 */
-.gallery-section {
-    width: 100%;
-    padding: 30px 0;
-}
-
-/* 2. ギャラリー本体の幅と中央配置を決定 */
-.gallery-container {
-    width: 100%;
-    max-width: 1600px; /* ★ワイドディスプレイ用の最大幅 */
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* 3. スライダー本体に、決定した比率を適用 */
-.gallery-slider {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    /* ★決定した解像度 1900:690 の比率を適用 */
-    aspect-ratio: 1900 / 690;
-}
-
-/* --- 以下、スライダーの内部スタイル --- */
-.gallery-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-.gallery-item { flex: 0 0 100%; min-width: 100%; height: 100%; }
-.gallery-item img { width: 100%; height: 100%; display: block; object-fit: cover; }
-.gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
-.gallery-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); padding: 0 0.5rem; }
-.gallery-dots { display: flex; gap: 0.5rem; }
-.gallery-dot { width: 30px; height: 4px; border-radius: 2px; background-color: var(--border-color); cursor: pointer; transition: background-color 0.3s ease; }
-.gallery-dot.active { background-color: var(--accent-color); }
-.gallery-timer { width: 100%; height: 4px; background-color: var(--border-color); border-radius: 2px; margin-top: 0.75rem; overflow: hidden; }
-.gallery-timer-bar { width: 0%; height: 100%; background-color: var(--accent-color); border-radius: 2px; }
-.gallery-timer-bar.is-animating { animation: progressBarAnimation 5s linear forwards; }
-@keyframes progressBarAnimation { from { width: 0%; } to { width: 100%; } }
-
 
 /* --- フッター --- */
 .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center; }
@@ -439,14 +233,49 @@ body { padding-top: 82px; }
     html { font-size: 15px; }
     body { padding-top: 72px; }
     .site-logo img { height: 40px; }
-.content-grid {
-    grid-template-columns: 1fr; /* スマホでは1列レイアウトにする */
-}
+    .content-grid { grid-template-columns: 1fr; }
     .hero-title { font-size: 1.8rem; }
     .page-title { font-size: 1.6rem; }
     .card h2 { font-size: 1.4rem; }
     .profile-layout, .tech-layout { flex-direction: column; }
     .grid-container, .member-grid { --grid-columns: 1; }
+
+    /* ▼▼▼ このブロックを追記 ▼▼▼ */
+    /* モバイルでは、メインのギャラリースライダー自体は非表示にする */
+    .gallery-section {
+        display: none;
+    }
+
+    /* メインビジュアルの高さを少し調整してスペースを確保 */
+    .hero-fullscreen {
+        min-height: 300px; /* 最低の高さを調整 */
+        /* aspect-ratioは維持される */
+    }
+
+    /* モバイル専用のギャラリーナビゲーションをメインビジュアルの下に作成 */
+    .mobile-gallery-nav {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px 0;
+        background-color: var(--background-color);
+    }
+
+    .mobile-gallery-dot {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+    }
+
+    .mobile-gallery-dot.active {
+        border-color: var(--accent-color);
+    }
+    /* ▲▲▲ 追記ここまで ▲▲▲ */
 }
 
 /* --- レスポンシブ改行 --- */

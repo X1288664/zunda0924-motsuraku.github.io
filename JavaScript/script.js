@@ -191,3 +191,48 @@ document.addEventListener('DOMContentLoaded', () => {
     startAutoPlay();
     resetTimerAnimation();
 });
+
+/* ▼▼▼ このブロックを追記 ▼▼▼ */
+/*==================================================
+モバイル専用 ヒーロー画像切り替え機能
+==================================================*/
+document.addEventListener('DOMContentLoaded', () => {
+    const hero = document.querySelector('.hero-fullscreen');
+    const heroImage = document.querySelector('.hero-background-image');
+    const gallerySlides = document.querySelectorAll('.gallery-section .gallery-item');
+    const mobileNavContainer = document.querySelector('.mobile-gallery-nav');
+
+    // 必要な要素がなければ何もしない
+    if (!hero || !heroImage || gallerySlides.length === 0 || !mobileNavContainer) {
+        return;
+    }
+
+    let mobileDots = [];
+    const imageUrls = Array.from(gallerySlides).map(slide => slide.querySelector('img').src);
+
+    // モバイル用のドットを生成
+    imageUrls.forEach((url, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('mobile-gallery-dot');
+        dot.style.backgroundImage = `url(${url})`;
+        
+        dot.addEventListener('click', () => {
+            // メインビジュアルの画像を変更
+            heroImage.src = imageUrls[index];
+            
+            // 全てのドットからactiveクラスを削除
+            mobileDots.forEach(d => d.classList.remove('active'));
+            // クリックされたドットにactiveクラスを追加
+            dot.classList.add('active');
+        });
+
+        mobileNavContainer.appendChild(dot);
+        mobileDots.push(dot);
+    });
+
+    // 初期状態で最初のドットをアクティブにする
+    if (mobileDots.length > 0) {
+        mobileDots[0].classList.add('active');
+    }
+});
+/* ▲▲▲ 追記ここまで ▲▲▲ */
