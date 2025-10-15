@@ -127,7 +127,7 @@ body { padding-top: 82px; }
 }
 .hero-fullscreen {
     position: relative; width: 100%; height: calc(70vh - 82px);
-    min-height: 450px; color: #fff; background-size: cover; background-position: center;
+    min-height: 100%; color: #fff; background-size: cover; background-position: center;
     display: flex; align-items: center; justify-content: center; text-align: center;
 }
 /* ▼▼▼ ここから追記 ▼▼▼ */
@@ -286,9 +286,8 @@ body { padding-top: 82px; }
     border: 1px solid var(--border-color);
     transition: transform 0.2s ease;
 }
-
 .gallery-item:hover img {
-    transform: scale(1.05);
+    transform: none; /* ホバー時に拡大させない */
 }
 
 /* ライトボックスの背景 */
@@ -388,87 +387,44 @@ body { padding-top: 82px; }
 /* style.css に追記 */
 
 /*==================================================
-イラストギャラリー（スライダー形式）
+イラストギャラリー（最終修正版）
 ==================================================*/
-.gallery-container {
-    padding: 1rem; /* カードとしての余白 */
-    overflow: hidden; /* はみ出し防止 */
+/* 1. ギャラリーセクションの背景と上下の余白 */
+.gallery-section {
+    width: 100%;
+    padding: 30px 0;
 }
 
+/* 2. ギャラリー本体の幅と中央配置を決定 */
+.gallery-container {
+    width: 100%;
+    max-width: 1600px; /* ★ワイドディスプレイ用の最大幅 */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 3. スライダー本体に、決定した比率を適用 */
 .gallery-slider {
     width: 100%;
-    overflow: hidden;
     border-radius: 8px;
-    position: relative; /* aspect-ratio を確実に機能させるため */
-    aspect-ratio: 2.5 / 1; /* ★スライダー全体の比率を 横2.5 : 縦1 に固定 */
-}
-.gallery-track {
-    display: flex;
-    height: 100%; /* ★親要素(.gallery-slider)の高さに合わせる */
-    transition: transform 0.5s ease-in-out;
-}
-.gallery-item {
-    flex: 0 0 100%;
-    min-width: 100%;
-    /* ★高さに関する指定をすべて削除 */
-}
-.gallery-item img {
-    width: 100%;
-    height: 100%; /* ★親要素の高さ(300px)いっぱいに広げる */
-    display: block;
-    object-fit: cover; /* 比率を維持したままコンテナを覆う */
-}
-.gallery-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.75rem;
-}
-.gallery-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-color);
-    padding: 0 0.5rem;
-}
-.gallery-dots {
-    display: flex;
-    gap: 0.5rem;
-}
-.gallery-dot {
-    width: 30px;  /* 横幅を長くする */
-    height: 4px;   /* 高さを低くする */
-    border-radius: 2px; /* 角を少し丸める */
-    background-color: var(--border-color);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.gallery-dot.active {
-    background-color: var(--accent-color);
-}
-.gallery-timer {
-    width: 100%;
-    height: 4px;
-    background-color: var(--border-color);
-    border-radius: 2px;
-    margin-top: 0.75rem;
     overflow: hidden;
+    /* ★決定した解像度 1900:690 の比率を適用 */
+    aspect-ratio: 1900 / 690;
 }
-.gallery-timer-bar {
-    width: 0%;
-    height: 100%;
-    background-color: var(--accent-color);
-    border-radius: 2px;
-}
-/* タイマーバーのアニメーション */
-.gallery-timer-bar.is-animating {
-    animation: progressBarAnimation 5s linear forwards;
-}
-@keyframes progressBarAnimation {
-    from { width: 0%; }
-    to { width: 100%; }
-}
+
+/* --- 以下、スライダーの内部スタイル --- */
+.gallery-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+.gallery-item { flex: 0 0 100%; min-width: 100%; height: 100%; }
+.gallery-item img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.gallery-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
+.gallery-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color); padding: 0 0.5rem; }
+.gallery-dots { display: flex; gap: 0.5rem; }
+.gallery-dot { width: 30px; height: 4px; border-radius: 2px; background-color: var(--border-color); cursor: pointer; transition: background-color 0.3s ease; }
+.gallery-dot.active { background-color: var(--accent-color); }
+.gallery-timer { width: 100%; height: 4px; background-color: var(--border-color); border-radius: 2px; margin-top: 0.75rem; overflow: hidden; }
+.gallery-timer-bar { width: 0%; height: 100%; background-color: var(--accent-color); border-radius: 2px; }
+.gallery-timer-bar.is-animating { animation: progressBarAnimation 5s linear forwards; }
+@keyframes progressBarAnimation { from { width: 0%; } to { width: 100%; } }
 
 
 /* --- フッター --- */
