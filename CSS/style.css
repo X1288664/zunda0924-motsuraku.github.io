@@ -87,17 +87,15 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 .hero-background-image {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: 1;
+    transition: opacity 0.3s ease-in-out; /* ★この一行を追加 */
 }
-.hero-fullscreen::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); z-index: 2;
-}
-.hero-content {
-    position: relative; padding: 1.5em 2em; background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 12px; backdrop-filter: blur(8px); z-index: 3;
-}
+
 .hero-title { font-size: 2.5rem; font-weight: 700; line-height: 1.3; }
 .hero-subtitle { font-size: 1.25rem; }
+/* モバイル専用コントロールパネル（PCでは非表示に） */
+.hero-controls-mobile {
+    display: none;
+}
 
 /* --- レイアウト設定 --- */
 .content-grid { display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; }
@@ -240,45 +238,63 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
     .profile-layout, .tech-layout { flex-direction: column; }
     .grid-container, .member-grid { --grid-columns: 1; }
 
-    /* ▼▼▼ このブロックを追記 ▼▼▼ */
-    /* モバイルでは、メインのギャラリースライダー自体は非表示にする */
+/* --- モバイル版ヒーロー/ギャラリー --- */
+    /* PC版ギャラリーは非表示に */
     .gallery-section {
         display: none;
     }
 
-    /* メインビジュアルの高さを少し調整してスペースを確保 */
+    /* ヒーローの高さを調整し、スライダーの親コンテナにする */
     .hero-fullscreen {
-        min-height: 300px; /* 最低の高さを調整 */
-        /* aspect-ratioは維持される */
+        min-height: 300px;
+        overflow: hidden; /* ★はみ出したスライドを隠す */
     }
 
-    /* モバイル専用のギャラリーナビゲーションをメインビジュアルの下に作成 */
-    .mobile-gallery-nav {
+    /* PC表示用の静的な画像は、モバイルでは非表示に */
+    .hero-fullscreen > .hero-background-image {
+        display: none;
+    }
+    
+    /* ★JSで生成されるスライド用トラック */
+    .hero-track-mobile {
+        display: flex;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    /* ★JSで生成される各スライド */
+    .hero-slide-mobile {
+        flex: 0 0 100%;
+        min-width: 100%;
+        height: 100%;
+    }
+    .hero-slide-mobile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* モバイル用コントロールパネル */
+    .hero-controls-mobile {
+        display: block;
+        padding: 20px 0;
+    }
+    .hero-dots {
         display: flex;
         justify-content: center;
-        gap: 10px;
-        padding: 20px 0;
-        background-color: var(--background-color);
+        gap: 12px;
     }
-
-    .mobile-gallery-dot {
-        width: 60px;
-        height: 60px;
-        border-radius: 8px;
-        border: 2px solid var(--border-color);
-        background-size: cover;
-        background-position: center;
-        cursor: pointer;
-        transition: border-color 0.3s ease;
+    .hero-dot {
+        width: 12px; height: 12px; border-radius: 50%;
+        background-color: #ccc;
+        cursor: pointer; padding: 0; border: none;
     }
-
-    .mobile-gallery-dot.active {
-        border-color: var(--accent-color);
+    .hero-dot.active {
+        background-color: var(--accent-color);
     }
-    /* ▲▲▲ 追記ここまで ▲▲▲ */
 }
-
 /* --- レスポンシブ改行 --- */
 .br-pc, .br-mobile { display: none; }
 @media (min-width: 769px) { .br-pc { display: inline; } }
 @media (max-width: 768px) { .br-mobile { display: inline; } }
+/* 括弧はここまで */
