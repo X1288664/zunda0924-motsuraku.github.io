@@ -125,7 +125,7 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
     opacity: 0; transform: translateY(20px);
     transition-delay: 0.2s;
 }
-.card, .btn { /* ★★★ transition指定をここに統合 ★★★ */
+.card, .btn, .sidebar-widget { /* ★★★ .sidebar-widget を追記 ★★★ */
     transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                 transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                 box-shadow 0.3s ease;
@@ -228,57 +228,58 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 
 /* --- レスポンシブ対応 --- */
 @media (max-width: 768px) {
+    /* --- 基本スタイルの調整 --- */
     html { font-size: 15px; }
     body { padding-top: 72px; }
     .site-logo img { height: 40px; }
     .content-grid { grid-template-columns: 1fr; }
-    .hero-title { font-size: 1.8rem; }
     .page-title { font-size: 1.6rem; }
     .card h2 { font-size: 1.4rem; }
     .profile-layout, .tech-layout { flex-direction: column; }
     .grid-container, .member-grid { --grid-columns: 1; }
 
-/* --- モバイル版ヒーロー/ギャラリー --- */
-    /* PC版ギャラリーは非表示に */
+    /* --- モバイル版ヒーロー/ギャラリーの表示設定 --- */
+    /* PC版のギャラリーは、モバイルでは完全に非表示 */
     .gallery-section {
         display: none;
     }
-
-    /* ヒーローの高さを調整し、スライダーの親コンテナにする */
-    .hero-fullscreen {
-        min-height: 300px;
-        overflow: hidden; /* ★はみ出したスライドを隠す */
-    }
-
-    /* PC表示用の静的な画像は、モバイルでは非表示に */
+    /* PC表示用の静的なヒーロー画像は、モバイルでは非表示 */
     .hero-fullscreen > .hero-background-image {
         display: none;
     }
+    /* モバイル専用コントロールパネルは、モバイルでのみ表示 */
+    .hero-controls-mobile {
+        display: block;
+        padding: 20px 0;
+    }
+
+/* ヒーローの高さを調整し、スライダーの親コンテナにする */
+    .hero-fullscreen {
+        min-height: auto;       /* 既存のmin-heightをリセット */
+        overflow: hidden;
+        aspect-ratio: 1 / 1.1;    /* モバイルでは比率を正方形にすると見切れが発生するため1:1.1に */
+        display: block;         /* ★PC用のflexboxを解除 */
+        align-items: stretch;     /* ★PC用の中央揃えを解除 */
+    }
     
-    /* ★JSで生成されるスライド用トラック */
+    /* JSで生成されるモバイル用スライダーのスタイル */
     .hero-track-mobile {
         display: flex;
         height: 100%;
         transition: transform 0.5s ease-in-out;
     }
-
-    /* ★JSで生成される各スライド */
     .hero-slide-mobile {
         flex: 0 0 100%;
         min-width: 100%;
         height: 100%;
     }
-    .hero-slide-mobile img {
+.hero-slide-mobile img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain; /* ★画像を「すべて表示」に切り替え */
     }
 
-    /* モバイル用コントロールパネル */
-    .hero-controls-mobile {
-        display: block;
-        padding: 20px 0;
-    }
+    /* モバイル用コントロールパネルの見た目 */
     .hero-dots {
         display: flex;
         justify-content: center;

@@ -1,9 +1,8 @@
-// JS/script.js (最終統合・修正版)
+// JS/script.js (最終統合・リサイズ対応・完全版)
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- ヘッダー、ナビゲーション、ページネーション、スクロールアニメーションの基本機能 ---
-    // (この部分は変更ありません)
+    // --- ヘッダーのスクロールエフェクト ---
     const siteHeader = document.querySelector('.site-header');
     if (siteHeader) {
         window.addEventListener('scroll', () => {
@@ -11,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
             else siteHeader.classList.remove('has-scrolled');
         });
     }
+
+    // --- ナビゲーションメニューの表示切り替え ---
     const menuToggle = document.querySelector('.menu-toggle');
     const menuContainer = document.querySelector('.menu-container');
     if (menuToggle && menuContainer) {
@@ -27,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         menuContainer.addEventListener('click', (e) => { e.stopPropagation(); });
     }
+
+    // --- メンバー一覧ページ・ページネーション機能 ---
     const membersPerPage = 6;
     const memberGrid = document.querySelector('.member-grid');
     const paginationContainer = document.querySelector('.pagination-container');
@@ -60,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalPages > 1) setupPagination();
         showPage(1);
     }
+
+    // --- スクロールに応じたアニメーション機能 ---
     const animatedElements = document.querySelectorAll('.card, .sidebar-widget');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -73,127 +78,181 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     //==================================================
-    // PC版とモバイル版で処理を分岐
+    // PC版とモバイル版のギャラリー機能をセットアップ
     //==================================================
-    const isMobile = window.innerWidth <= 768;
+    let pcSliderInitialized = false;
+    let mobileSliderInitialized = false;
 
-    if (isMobile) {
-        // --- モバイル専用 ヒーロー画像スライダー機能 ---
+    // --- PC版 ギャラリースライダーのセットアップ関数 ---
+    function setupPcSlider() {
+        if (pcSliderInitialized) return;
+        const pcGallery = document.querySelector('.gallery-section');
+        if (!pcGallery) return;
+
+        const track = pcGallery.querySelector('.gallery-track');
+        const slides = Array.from(track.children);
+        if (slides.length > 0) {
+            const nextButton = pcGallery.querySelector('.gallery-btn.next');
+            const prevButton = pcGallery.querySelector('.gallery-btn.prev');
+            const dotsNav = pcGallery.querySelector('.gallery-dots');
+            const timerBar = pcGallery.querySelector('.gallery-timer-bar');
+            let currentIndex = 0;
+            let autoPlayInterval;
+            let slideWidth = slides[0].getBoundingClientRect().width;
+
+            const moveToSlide = (targetIndex) => {
+                if (slides.length <= 1) return;
+                track.style.transform = `translateX(-${slideWidth * targetIndex}px)`;
+                currentIndex = targetIndex;
+                updateDots(targetIndex);
+                resetTimerAnimation();
+            };
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('button');
+                dot.classList.add('gallery-dot');
+                dot.addEventListener('click', () => { moveToSlide(index); resetAutoPlay(); });
+                dotsNav.appendChild(dot);
+            });
+            const dots = Array.from(dotsNav.children);
+            const updateDots = (targetIndex) => {
+                dots.forEach((dot, index) => dot.classList.toggle('active', index === targetIndex));
+            };
+            const resetTimerAnimation = () => {
+                if (!timerBar) return;
+                timerBar.classList.remove('is-animating');
+                void timerBar.offsetWidth;
+                timerBar.classList.add('is-animating');
+            };
+            const startAutoPlay = () => {
+                if (slides.length <= 1) return;
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = setInterval(() => moveToSlide((currentIndex + 1) % slides.length), 5000);
+            };
+            const resetAutoPlay = () => { clearInterval(autoPlayInterval); startAutoPlay(); };
+            nextButton.addEventListener('click', () => { moveToSlide((currentIndex + 1) % slides.length); resetAutoPlay(); });
+            prevButton.addEventListener('click', () => { moveToSlide((currentIndex - 1 + slides.length) % slides.length); resetAutoPlay(); });
+            pcGallery.addEventListener('mouseenter', () => { clearInterval(autoPlayInterval); if(timerBar) timerBar.classList.remove('is-animating'); });
+            pcGallery.addEventListener('mouseleave', () => { resetAutoPlay(); resetTimerAnimation(); });
+            window.addEventListener('resize', () => {
+                slideWidth = slides[0].getBoundingClientRect().width;
+                track.style.transition = 'none';
+                moveToSlide(currentIndex);
+                track.offsetHeight;
+                track.style.transition = 'transform 0.5s ease-in-out';
+            });
+            updateDots(0); startAutoPlay(); resetTimerAnimation();
+            pcSliderInitialized = true;
+        }
+    }
+
+    // --- モバイル専用 ヒーロー画像スライダーのセットアップ関数 ---
+    function setupMobileSlider() {
+        if (mobileSliderInitialized) return;
         const heroContainer = document.querySelector('.hero-fullscreen');
         const mobileDotsContainer = document.querySelector('.hero-controls-mobile .hero-dots');
         const mobileSlidesData = Array.from(document.querySelectorAll('.gallery-section .gallery-item'));
 
-        if (heroContainer && mobileDotsContainer && mobileSlidesData.length > 0) {
-            const staticHeroImage = heroContainer.querySelector('.hero-background-image');
-            if(staticHeroImage) staticHeroImage.style.display = 'none';
+        if (!heroContainer || !mobileDotsContainer || mobileSlidesData.length === 0) return;
 
-            const track = document.createElement('div');
-            track.className = 'hero-track-mobile';
-            
-            const imageUrls = mobileSlidesData.map(slide => slide.querySelector('img').src);
-            const linkUrls = mobileSlidesData.map(slide => slide.getAttribute('href'));
+        const staticHeroImage = heroContainer.querySelector('.hero-background-image');
+        if(staticHeroImage) staticHeroImage.style.display = 'none';
 
-            imageUrls.forEach((url, index) => {
-                const slide = document.createElement('a');
-                slide.href = linkUrls[index];
-                slide.className = 'hero-slide-mobile';
-                const img = document.createElement('img');
-                img.src = url;
-                slide.appendChild(img);
-                track.appendChild(slide);
+        const track = document.createElement('div');
+        track.className = 'hero-track-mobile';
+        
+        const imageUrls = mobileSlidesData.map(slide => slide.getAttribute('data-sp'));
+        const linkUrls = mobileSlidesData.map(slide => slide.getAttribute('href'));
+
+        imageUrls.forEach((url, index) => {
+            const slide = document.createElement('a');
+            slide.href = linkUrls[index];
+            slide.className = 'hero-slide-mobile';
+            const img = document.createElement('img');
+            img.src = url;
+            slide.appendChild(img);
+            track.appendChild(slide);
+        });
+        heroContainer.appendChild(track);
+
+        const slides = Array.from(track.children);
+        let mobileCurrentIndex = 0;
+        let mobileAutoPlayInterval;
+
+        const moveToSlide = (index) => {
+            const slideWidth = heroContainer.getBoundingClientRect().width;
+            track.style.transform = `translateX(-${slideWidth * index}px)`;
+            mobileCurrentIndex = index;
+            updateDots(index);
+        };
+        slides.forEach((slide, index) => {
+            const dot = document.createElement('button');
+            dot.classList.add('hero-dot');
+            dot.addEventListener('click', () => {
+                moveToSlide(index);
+                startMobileAutoPlay();
             });
-            heroContainer.appendChild(track);
-
-            const slides = Array.from(track.children);
-            let mobileCurrentIndex = 0;
-            let mobileAutoPlayInterval;
-
-            const moveToSlide = (index) => {
-                const slideWidth = heroContainer.getBoundingClientRect().width;
-                track.style.transform = `translateX(-${slideWidth * index}px)`;
-                mobileCurrentIndex = index;
-                updateDots(index);
-            };
-            slides.forEach((slide, index) => {
-                const dot = document.createElement('button');
-                dot.classList.add('hero-dot');
-                dot.addEventListener('click', () => {
-                    moveToSlide(index);
-                    startMobileAutoPlay();
-                });
-                mobileDotsContainer.appendChild(dot);
-            });
-            const mobileDots = Array.from(mobileDotsContainer.children);
-            const updateDots = (index) => {
-                mobileDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-            };
-            function startMobileAutoPlay() {
-                clearInterval(mobileAutoPlayInterval);
-                mobileAutoPlayInterval = setInterval(() => {
-                    moveToSlide((mobileCurrentIndex + 1) % slides.length);
-                }, 5000);
-            }
-            updateDots(0);
-            startMobileAutoPlay();
+            mobileDotsContainer.appendChild(dot);
+        });
+        const mobileDots = Array.from(mobileDotsContainer.children);
+        const updateDots = (index) => {
+            mobileDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        };
+        function startMobileAutoPlay() {
+            clearInterval(mobileAutoPlayInterval);
+            mobileAutoPlayInterval = setInterval(() => {
+                moveToSlide((mobileCurrentIndex + 1) % slides.length);
+            }, 5000);
         }
-
-    } else {
-        // --- PC版 ギャラリースライダー機能 ---
-        const pcGallery = document.querySelector('.gallery-section');
-        if (pcGallery) {
-            const track = pcGallery.querySelector('.gallery-track');
-            const slides = Array.from(track.children);
-            if (slides.length > 0) {
-                const nextButton = pcGallery.querySelector('.gallery-btn.next');
-                const prevButton = pcGallery.querySelector('.gallery-btn.prev');
-                const dotsNav = pcGallery.querySelector('.gallery-dots');
-                const timerBar = pcGallery.querySelector('.gallery-timer-bar');
-                let currentIndex = 0;
-                let autoPlayInterval;
-                let slideWidth = slides[0].getBoundingClientRect().width;
-
-                const moveToSlide = (targetIndex) => {
-                    if (slides.length <= 1) return;
-                    track.style.transform = `translateX(-${slideWidth * targetIndex}px)`;
-                    currentIndex = targetIndex;
-                    updateDots(targetIndex);
-                    resetTimerAnimation();
-                };
-                slides.forEach((slide, index) => {
-                    const dot = document.createElement('button');
-                    dot.classList.add('gallery-dot');
-                    dot.addEventListener('click', () => { moveToSlide(index); resetAutoPlay(); });
-                    dotsNav.appendChild(dot);
-                });
-                const dots = Array.from(dotsNav.children);
-                const updateDots = (targetIndex) => {
-                    dots.forEach((dot, index) => dot.classList.toggle('active', index === targetIndex));
-                };
-                const resetTimerAnimation = () => {
-                    if (!timerBar) return;
-                    timerBar.classList.remove('is-animating');
-                    void timerBar.offsetWidth;
-                    timerBar.classList.add('is-animating');
-                };
-                const startAutoPlay = () => {
-                    if (slides.length <= 1) return;
-                    clearInterval(autoPlayInterval);
-                    autoPlayInterval = setInterval(() => moveToSlide((currentIndex + 1) % slides.length), 5000);
-                };
-                const resetAutoPlay = () => { clearInterval(autoPlayInterval); startAutoPlay(); };
-                nextButton.addEventListener('click', () => { moveToSlide((currentIndex + 1) % slides.length); resetAutoPlay(); });
-                prevButton.addEventListener('click', () => { moveToSlide((currentIndex - 1 + slides.length) % slides.length); resetAutoPlay(); });
-                pcGallery.addEventListener('mouseenter', () => { clearInterval(autoPlayInterval); if(timerBar) timerBar.classList.remove('is-animating'); });
-                pcGallery.addEventListener('mouseleave', () => { resetAutoPlay(); resetTimerAnimation(); });
-                window.addEventListener('resize', () => {
-                    slideWidth = slides[0].getBoundingClientRect().width;
-                    track.style.transition = 'none';
-                    moveToSlide(currentIndex);
-                    track.offsetHeight;
-                    track.style.transition = 'transform 0.5s ease-in-out';
-                });
-                updateDots(0); startAutoPlay(); resetTimerAnimation();
+        
+        let startX = 0; let diffX = 0;
+        track.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX;
+            clearInterval(mobileAutoPlayInterval);
+            track.style.transition = 'none';
+        });
+        track.addEventListener('touchmove', (e) => {
+            const currentX = e.touches[0].pageX;
+            diffX = currentX - startX;
+            const slideWidth = heroContainer.getBoundingClientRect().width;
+            track.style.transform = `translateX(${ -slideWidth * mobileCurrentIndex + diffX }px)`;
+        });
+        track.addEventListener('touchend', () => {
+            track.style.transition = 'transform 0.5s ease-in-out';
+            if (Math.abs(diffX) > 50) {
+                if (diffX < 0) moveToSlide((mobileCurrentIndex + 1) % slides.length);
+                else moveToSlide((mobileCurrentIndex - 1 + slides.length) % slides.length);
+            } else {
+                moveToSlide(mobileCurrentIndex);
             }
+            startMobileAutoPlay();
+            diffX = 0;
+        });
+
+        updateDots(0);
+        startMobileAutoPlay();
+        mobileSliderInitialized = true;
+    }
+
+    // --- 画面サイズに応じて実行する関数を決定する ---
+    function handleResize() {
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            setupMobileSlider();
+        } else {
+            setupPcSlider();
         }
     }
+
+    // --- リサイズイベントの制御 ---
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            // リロードして状態をリセットするのが最も安全で確実
+            window.location.reload();
+        }, 250);
+    });
+
+    // --- 初期読み込み時に一度実行 ---
+    handleResize();
 });
