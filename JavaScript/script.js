@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
             // リロードして状態をリセットするのが最も安全で確実
-            window.location.reload();
+            //window.location.reload();
         }, 250);
     });
 
