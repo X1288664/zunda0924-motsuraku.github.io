@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メンバー紹介 - もつ楽公式サイト</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
+    
+    <link rel="icon" href="my-favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        /* 詳細ページ専用のスタイル */
+        .profile-container { 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px; 
+        }
+        
+        /* ★画像のスタイル修正：これで中央に表示されます */
+        .profile-img-large { 
+            width: auto;       /* 画像本来の幅を使用 */
+            max-width: 100%;   /* 画面からはみ出さないように */
+            max-height: 400px; /* 縦長になりすぎないよう制限 */
+            height: auto;
+            border-radius: 10px; 
+            display: block;    /* ブロック要素にして */
+            margin: 0 auto 30px; /* 左右の余白を自動(auto)にして中央揃え */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 30px; 
+            color: #007bff; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.7.0-Beta+GhP)</p>
+                </div>
+            </div>
+            <nav class="main-navigation">
+                <button class="menu-toggle">メニュー▼</button>
+                <div class="menu-container">
+                    <a href="products.html">制作物</a>
+                    <a href="update.html">更新履歴</a>
+                    <a href="Profile-server-manager.html">サイト管理者プロフィール</a>
+                    <a href="Server-info.html">このサイトについて</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="profile-container">
+            <img id="p-image" src="" alt="" class="profile-img-large">
+            <h1 id="p-name">読み込み中...</h1>
+            <p id="p-position" style="font-weight:bold; color:#666;"></p>
+            <hr>
+            <div id="p-detail" style="line-height: 1.8;"></div>
+
+            <div id="achievements-section"></div>
+
+            <div class="button-container" style="margin-top: 30px;">
+    <a href="members.html" class="btn">← メンバー一覧に戻る</a>
+</div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap.xml自動生成ツール" /></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX</p>
+        </div>
+    </footer>
+
+    <script src="JavaScript/script.js"></script>
+    <script src="JavaScript/members.js"></script>
+    
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const targetId = params.get('id');
+        const member = membersData.find(m => m.id === targetId);
+
+        if (member) {
+            // 基本情報の埋め込み
+            document.title = member.name + " | メンバー紹介";
+            document.getElementById('p-image').src = member.image;
+            document.getElementById('p-image').alt = member.name;
+            document.getElementById('p-name').textContent = member.name;
+            document.getElementById('p-position').textContent = member.position;
+            document.getElementById('p-detail').innerHTML = member.detail;
+
+            // --- 功績セクションの生成処理 ---
+            const achSection = document.getElementById('achievements-section');
+            
+            // 功績データが存在し、かつ中身が1つ以上ある場合のみ表示
+            if (member.achievements && member.achievements.length > 0) {
+                let itemsHTML = '';
+                
+                member.achievements.forEach(item => {
+                    // リンクがあるかどうかでタグを使い分ける
+                    const tag = item.link ? 'a' : 'div';
+                    const hrefAttr = item.link ? `href="${item.link}"` : '';
+                    // CSSのクラスを適用
+                    const classAttr = 'grid-item card'; 
+
+                    itemsHTML += `
+                        <${tag} ${hrefAttr} class="${classAttr}" style="display:block; text-decoration:none; color:inherit; transition:transform 0.2s;">
+                            <div class="grid-item-content" style="padding:15px;">
+                                <h3 style="margin-top:0;">${item.title}</h3>
+                                ${item.desc ? `<p style="margin-bottom:0; font-size:0.9em; color:#666;">${item.desc}</p>` : ''}
+                            </div>
+                        </${tag}>
+                    `;
+                });
+
+                // セクション全体のHTMLを組み立てて挿入
+                achSection.innerHTML = `
+                    <section style="margin-top: 40px;">
+                        <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">管理部での功績</h2>
+                        <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px;">
+                            ${itemsHTML}
+                        </div>
+                    </section>
+                `;
+            }
+        } else {
+            document.querySelector('.profile-container').innerHTML = '<h1>該当するメンバーが見つかりません。</h1><a href="members.html" class="back-btn">一覧に戻る</a>';
+        }
+    </script>
+</body>
+</html>

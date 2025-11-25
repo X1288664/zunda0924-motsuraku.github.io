@@ -37,49 +37,102 @@
         </div>
     </header>
 
-    <main class="site-content">
+<main class="site-content">
         <div class="container">
             <h2 class="page-title">管理部メンバー紹介</h2>
-            <div class="member-grid">
-                 <!--メンバーが増えるごとにここに追加-->
-                <a href="members/member-profile-test88g-.html" class="member-card">
-                    <div class="member-thumbnail"><img src="image/profile-icon-wide.png" alt="パヤ爺"></div>
-                    <div class="member-info"><h3 class="member-name">パヤ爺</h3><p class="member-description">ヘルパー</p></div>
-                </a>
-                <a href="members/member-profile-mosuWO.html" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー2"></div>
-                    <div class="member-info"><h3 class="member-name">もす吉</h3><p class="member-description">最近古参の仲間入りしました。</p></div>
-                </a>
-                <a href="members/member-profile-mahomaru.html" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/mahomaru.jpg" alt="メンバー3"></div>
-                    <div class="member-info"><h3 class="member-name">まほまる</h3><p class="member-description">最興の鳥能力者</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー4"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー4</h3><p class="member-description">説明</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー5"></div>
-                    <div class="member-info"><h3 class="member-name">このページは限定公開です</h3><p class="member-description">ページリンクを外部に公開しないでください。</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー6"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー6</h3><p class="member-description">説明</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー7"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー7</h3><p class="member-description">説明</p></div>
-                </a>
+            
+            <div id="member-list" class="member-grid">
                 </div>
 
-            <nav class="pagination-container" aria-label="ページナビゲーション"></nav>
-
+            <nav id="pagination" class="pagination-container" aria-label="ページナビゲーション"></nav>
         </div>
     </main>
 
     <footer class="site-footer">
-        </footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap.xml自動生成ツール" /></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX</p>
+        </div>
+    </footer>
 
     <script src="JavaScript/script.js"></script>
+    
+    <script src="JavaScript/members.js"></script>
+    
+    <script>
+        // 設定
+        const itemsPerPage = 6; // 1ページあたりの表示数
+        const listContainer = document.getElementById('member-list');
+        const paginationContainer = document.getElementById('pagination');
+
+        // URLから現在のページ番号を取得（なければ1ページ目）
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentPage = parseInt(urlParams.get('page')) || 1;
+
+        // 表示処理
+        function renderMembers() {
+            // データが読み込めていない場合のエラー回避
+            if (typeof membersData === 'undefined') {
+                console.error("members.js が読み込まれていません");
+                return;
+            }
+
+            listContainer.innerHTML = ''; // 一旦クリア
+
+            // 表示するデータの範囲を計算
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = membersData.slice(startIndex, endIndex);
+
+            // カードを生成して表示
+            pageData.forEach(member => {
+                // HTMLを生成 (既存のCSSクラス member-card 等を使用)
+                const cardHTML = `
+                    <a href="profile.html?id=${member.id}" class="member-card">
+                        <div class="member-thumbnail">
+                            <img src="${member.image}" alt="${member.name}">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">${member.name}</h3>
+                            <p class="member-description">${member.position}</p>
+                            <p style="font-size:0.8rem; color:#888; margin-top:5px;">${member.message}</p>
+                        </div>
+                    </a>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            renderPagination();
+        }
+
+        // ページネーション生成処理
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(membersData.length / itemsPerPage);
+
+            // ページ数が1以下の場合はボタンを表示しない
+            if (totalPages <= 1) return;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('a');
+                btn.href = `?page=${i}`; // ページ移動リンク
+                // 既存のCSSクラスがあれば適用、なければstyle.cssに追加した .page-btn を使用
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = i;
+                paginationContainer.appendChild(btn);
+            }
+        }
+
+        // 実行
+        renderMembers();
+    </script>
+
 </body>
 </html>
