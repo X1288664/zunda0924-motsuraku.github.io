@@ -5,7 +5,7 @@ const membersData = [
         id: "01",
         name: "パヤ爺",
         position: "ヘルパー[元副官]",
-        image: "../image/members/payag.webp",
+        image: "../image/members/HP_04_PYG.webp",
         message: "パヤ爺です。現在はヘルパーですが昔は副官でした。",
         detail: `
             パヤ爺です。<br>
@@ -34,7 +34,7 @@ const membersData = [
         id: "02",
         name: "もす吉",
         position: "ヘルパー",
-        image: "../image/members/undefined-user-icon.webp",
+        image: "../image/members/XX_00_Def.webp",
         message: "最近古参の仲間入りしました。",
         detail: `もす吉です。<br>
         実はアカウントを2つ持ってます。<br>
@@ -51,7 +51,7 @@ const membersData = [
         id: "03",
         name: "まほまる",
         position: "副官",
-        image: "../image/members/mahomaru.webp",
+        image: "../image/members/EL_03_MAH.webp",
         message: "最興の鳥能力者",
         detail: `最興の鳥能力者<br>
             <ul>
