@@ -386,11 +386,12 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 }
 
 .profile-img-large {
-    width: 100%;
-    max-width: 600px;
+    width: auto;       /* ★画像本来の幅を使用（無理に引き伸ばさない） */
+    max-width: 100%;   /* 画面からはみ出さないように */
+    max-height: 400px; /* 縦長になりすぎないよう制限 */
     border-radius: 10px;
     display: block;
-    margin: 0 auto 30px;
+    margin: 0 auto 30px; /* 中央寄せ */
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
@@ -417,4 +418,191 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
     .profile-img-large {
         max-width: 100%;
     }
+}
+
+/* css/style.css に追記 */
+
+/* css/style.css (修正版) */
+
+/* --- クリエイター詳細ページのテキスト装飾 --- */
+
+/* 1. 名前のデザイン */
+.creator-text-area h3 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: left; /* ★左寄せを強制 */
+}
+
+/* 2. 役職のデザイン */
+.creator-text-area #p-position {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 15px; /* 間隔を少し詰める */
+    text-align: left; /* ★左寄せを強制 */
+}
+
+/* 3. 詳細文（自己紹介）の行間調整 */
+.creator-text-area .text-pre-line {
+    font-size: 1rem;
+    line-height: 1.4; /* ★行間をさらに狭く (1.5 -> 1.4) */
+    color: var(--text-color);
+    text-align: left; /* ★左寄せを強制 */
+}
+
+/* もし .text-pre-line 自体に余白がある場合のリセット */
+.text-pre-line p {
+    margin: 0 0 0.5em 0; /* 段落ごとの余白も最小限に */
+}
+
+/* --- クリエイター詳細ページ用レイアウト --- */
+.creator-profile-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start; /* 上揃え */
+}
+
+.creator-img-area {
+    flex: 0 0 300px; /* PC版の画像幅を300pxに固定 */
+}
+
+.creator-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.creator-text-area {
+    flex: 1; /* 残りのスペースをテキストに使用 */
+}
+
+/* --- スマホ用レスポンシブ対応 --- */
+@media (max-width: 768px) {
+    .creator-profile-layout {
+        flex-direction: column; /* 縦並びに変更 */
+        align-items: center;    /* 中央揃え */
+    }
+
+    .creator-img-area {
+        flex: none;
+        width: 100%;
+        max-width: 400px; /* スマホでの最大幅 */
+        margin-bottom: 20px;
+    }
+}
+/* css/style.css の一番下に追記 */
+
+/*==================================================
+イラストギャラリー・ライトボックス機能
+==================================================*/
+
+/* --- イラストギャラリー（グリッド表示） --- */
+.illust-grid {
+    display: grid;
+    /* ★最小幅を 250px 程度に広げることで、サムネイルが大きく表示されます */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.illust-item {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    aspect-ratio: 16 / 9; /* 正方形にトリミング */
+}
+
+.illust-item:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.illust-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /*枠いっぱいに表示 */
+    display: block;
+}
+
+/* --- ライトボックス（拡大表示） --- */
+.lightbox-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* 背景を濃くして画像を目立たせる */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* 最前面に */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    border-radius: 4px;
+    object-fit: contain; /* 画像全体を表示 */
+}
+
+/* ★閉じるボタンのスタイル（重要） */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2); /* 背景色をつけて見やすく */
+    border-radius: 50%;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 10000; /* 画像よりも手前に */
+    transition: background-color 0.2s;
+}
+
+.lightbox-close:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* css/style.css に追記 */
+
+/* 汎用埋め込みフレーム（Hugging Faceなど用） */
+.embed-iframe {
+    width: 100%;
+    height: 400px; /* デフォルトの高さ */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+}
+/* css/style.css の一番下に追加 */
+
+/* --- モバイルでの横はみ出し防止 --- */
+html, body {
+    overflow-x: hidden; /* 横スクロールを禁止し、はみ出した部分を隠す */
+    max-width: 100vw;   /* 最大幅を画面幅に制限 */
+}
+
+/* 念のため、全ての画像とiframeも画面幅に収まるようにする */
+img, iframe, video {
+    max-width: 100%;
+    height: auto;
 }

@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メンバー紹介 - もつ楽公式サイト</title>
+    <title>クリエイター紹介 - もつ楽公式サイト</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="icon" href="my-favicon/favicon.ico">
     <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
@@ -40,46 +39,89 @@
     <main class="site-content">
         <div class="container">
             <h2 class="page-title">クリエイター紹介</h2>
-            <div class="member-grid">
-                 <!--メンバーが増えるごとにここに追加-->
-                <a href="creators/creator-profile-test88g-.html" class="member-card">
-                    <div class="member-thumbnail"><img src="image/profile-icon-wide.png" alt="パヤ爺"></div>
-                    <div class="member-info"><h3 class="member-name">パヤ爺</h3><p class="member-description">プロフィールの表示例</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー2"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー2</h3><p class="member-description">説明</p></div>
-                </a>
-                <a href="members/member-profile-mahomaru.html" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/mahomaru.jpg" alt="メンバー3"></div>
-                    <div class="member-info"><h3 class="member-name">まほまる</h3><p class="member-description">最興の鳥能力者</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー4"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー4</h3><p class="member-description">説明</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー5"></div>
-                    <div class="member-info"><h3 class="member-name">このページは限定公開です</h3><p class="member-description">ページリンクを外部に公開しないでください。</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー6"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー6</h3><p class="member-description">説明</p></div>
-                </a>
-                <a href="#" class="member-card">
-                    <div class="member-thumbnail"><img src="image/member-thumbnail/undefined-user-icon.png" alt="メンバー7"></div>
-                    <div class="member-info"><h3 class="member-name">メンバー7</h3><p class="member-description">説明</p></div>
-                </a>
+            
+            <div id="creator-list" class="member-grid">
                 </div>
 
-            <nav class="pagination-container" aria-label="ページナビゲーション"></nav>
-
+            <nav id="pagination" class="pagination-container" aria-label="ページナビゲーション"></nav>
         </div>
     </main>
 
     <footer class="site-footer">
-        </footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap.xml自動生成ツール" /></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX</p>
+        </div>
+    </footer>
 
     <script src="JavaScript/script.js"></script>
+    <script src="JavaScript/creators.js"></script>
+    
+    <script>
+        // 設定
+        const itemsPerPage = 6;
+        const listContainer = document.getElementById('creator-list');
+        const paginationContainer = document.getElementById('pagination');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentPage = parseInt(urlParams.get('page')) || 1;
+
+        function renderCreators() {
+            // creatorsData が存在するか確認
+            if (typeof creatorsData === 'undefined') {
+                console.error("creators.js が読み込まれていません");
+                return;
+            }
+
+            listContainer.innerHTML = ''; 
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = creatorsData.slice(startIndex, endIndex);
+
+            pageData.forEach(creator => {
+                const cardHTML = `
+                    <a href="creator_profile.html?id=${creator.id}" class="member-card">
+                        <div class="member-thumbnail">
+                            <img src="${creator.image}" alt="${creator.name}">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">${creator.name}</h3>
+                            <p class="member-description">${creator.position}</p>
+                            <p style="font-size:0.8rem; color:#888; margin-top:5px;">${creator.message}</p>
+                        </div>
+                    </a>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(creatorsData.length / itemsPerPage);
+
+            if (totalPages <= 1) return;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('a');
+                btn.href = `?page=${i}`;
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = i;
+                paginationContainer.appendChild(btn);
+            }
+        }
+
+        renderCreators();
+    </script>
+
 </body>
 </html>

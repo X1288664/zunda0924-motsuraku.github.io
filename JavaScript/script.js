@@ -253,6 +253,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 250);
     });
 
+//==================================================
+    // イラストギャラリー・ライトボックス機能
+    //==================================================
+    // ページ内のギャラリーアイテムをクリックした時の処理（動的に生成される要素にも対応）
+    document.body.addEventListener('click', (e) => {
+        const link = e.target.closest('.illust-item');
+        if (link) {
+            e.preventDefault(); // リンク遷移を無効化
+            const fullImgSrc = link.getAttribute('href');
+            
+            // ライトボックスのHTMLを生成
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox-overlay';
+            lightbox.innerHTML = `
+                <div class="lightbox-close">&times;</div>
+                <img src="${fullImgSrc}" class="lightbox-content">
+            `;
+
+            document.body.appendChild(lightbox);
+
+            // フェードイン
+            requestAnimationFrame(() => {
+                lightbox.style.opacity = '1';
+            });
+
+            // 閉じる処理（ボタンクリック または 背景クリック）
+            const closeLightbox = () => {
+                lightbox.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(lightbox)) {
+                        document.body.removeChild(lightbox);
+                    }
+                }, 300);
+            };
+
+            lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox(); // 画像以外をクリックで閉じる
+            });
+        }
+    });
     // --- 初期読み込み時に一度実行 ---
     handleResize();
 });
