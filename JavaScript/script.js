@@ -2,6 +2,32 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+//==================================================
+    // ダークモード切り替え機能
+    //==================================================
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // 保存された設定があれば適用
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        if (themeToggleBtn) themeToggleBtn.textContent = '☀️';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.textContent = '🌙';
+            }
+        });
+    }
+
     // --- ヘッダーのスクロールエフェクト ---
     const siteHeader = document.querySelector('.site-header');
     if (siteHeader) {

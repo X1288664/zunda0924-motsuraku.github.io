@@ -2,9 +2,7 @@
 
 const membersData = [
 {
-        id: "01",
-        name: "パヤ爺",
-        position: "ヘルパー[元副官]",
+        id: "01", name: "パヤ爺", position: "ヘルパー[元副官]",
         image: "../image/members/HP_04_PYG.webp",
         message: "パヤ爺です。現在はヘルパーですが昔は副官でした。",
         detail: `
@@ -17,6 +15,8 @@ const membersData = [
             </ul>
         `,
         // ▼▼▼ ここを追加：功績リスト ▼▼▼
+        //...テンプレートです...1ページに6人ごと表示できます。
+        // { id: "00", name: "メンバー0", position: "役職なし",image: "../image/members/XX_00_Def.webp", message: "説明", detail: `詳細`,achievements: [] },
         achievements: [
             {
                 title: "国旗トーナメント運営",
@@ -31,9 +31,7 @@ const membersData = [
         ]//功績がない場合は空の配列にしておく ⇒ achievements: []
     },
     {
-        id: "02",
-        name: "もす吉",
-        position: "ヘルパー",
+        id: "02", name: "もす吉", position: "ヘルパー",
         image: "../image/members/XX_00_Def.webp",
         message: "最近古参の仲間入りしました。",
         detail: `もす吉です。<br>
@@ -45,12 +43,10 @@ const membersData = [
                 <li><strong>好きなキャラ:</strong> ダークマター族, クラッコ, ワドルドゥ</li>
             </ul>
         `,
-        achievements: [] // 功績がない場合は空の配列にしておく
+        achievements: []
     },
     {
-        id: "03",
-        name: "まほまる",
-        position: "副官",
+        id: "03", name: "まほまる", position: "副官",
         image: "../image/members/EL_03_MAH.webp",
         message: "最興の鳥能力者",
         detail: `最興の鳥能力者<br>
@@ -68,9 +64,32 @@ const membersData = [
             },
         ]
     },
-    // ... 必要な人数分コピーして増やしてください ...
-    { id: "04", name: "メンバー4", position: "役職なし", image: "../image/members/undefined-user-icon.webp", message: "説明", detail: `詳細`,achievements: [] },
-    { id: "05", name: "メンバー5", position: "役職なし", image: "../image/members/undefined-user-icon.webp", message: "説明", detail: `詳細`,achievements: [] },
-    { id: "06", name: "メンバー6", position: "役職なし", image: "../image/members/undefined-user-icon.webp", message: "説明", detail: `詳細`,achievements: [] },
-    { id: "07", name: "メンバー7", position: "2ページ目の人", image: "../image/members/undefined-user-icon.webp", message: "ここから2ページ目です", detail: `詳細`,achievements: [] },
-];
+    { id: "04", name: "焼きそばパン", position: "ヘルパー",
+        image: "../image/members/XX_00_Def.webp",
+        message: "ユーキの弟子焼きそばパンです。",
+        detail: `浮上することは少ないですがよろしくお願いします。<br>
+                ユーキは私のものです
+                <ul>
+                <li><strong>もつ楽参加日:</strong>2024年5月26日</li>
+                <li><strong>主な活動:</strong>カビファイ2、グルフェスなどの週大会</li>
+                </ul>`,
+        achievements: [] },
+    { id: "05", name: "ピト", position: "ヘルパー",
+        image: "../image/members/XX_00_Def.webp",
+        message: "古参のよく低浮上になるヘルパーです。",
+        detail: `古参のよく低浮上になるヘルパーです。<br>
+        見かけたらあの人かと思い出してくれると嬉しいです。
+        <ul>
+        <li><strong>もつ楽参加日:</strong>2022年5月7日
+        <li><strong>主な活動:</strong>週大会の開催、s13の企画、運営</li>`,
+        achievements: [] },
+    { id: "06", name: "6号", position: "ヘルパー",
+        image: "../image/members/XX_00_Def.webp",
+        message: "管理部の中で一番新参かつ年少です",
+        detail: `管理部の中で一番新参かつ年少ですが、<br>
+        古参以外の視点から運営に参加出来るという強みを活かし活動したいです！
+        <ul>
+        <li><strong>もつ楽参加日:</strong>2025年8月7日</li>
+        </ul>`
+        ,achievements: [] },
+]

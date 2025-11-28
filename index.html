@@ -37,12 +37,18 @@
                     <p class="site-description">(Ver.0.7.0-Beta+GhP)</p>
                 </div>
             </div>
+            <nav class="main-navigation" style="display: flex; align-items: center; gap: 10px;">
+
+    <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">
+        🌙
+    </button>
             <nav class="main-navigation">
                 <button class="menu-toggle">メニュー▼</button>
                 <div class="menu-container">
-                    <a href="products.html">制作物</a>
+                    <a href="creators.html">クリエイター</a>
+                    <a href="products.html">ソーシャルメディア</a>
                     <a href="update.html">更新履歴</a>
-                    <a href="#">準備中</a>
+                    <a href="members.html">管理メンバー</a>
                     <a href="Server-info.html">このサイトについて</a>
                 </div>
             </nav>
@@ -122,10 +128,11 @@
                             </div>
                     </section>
                     <section class="card">
-                        <h2>準備中-linux-edited-check</h2>
-                        <p>新ページ制作中!続報を待とう!
-                        <!--これを見られる君は素晴らしい。[でもナイショにしておいてね。]<a href="members.html" target="_blank" rel="noopener noreferrer">memlist</a>-->
-                        </p>
+                        <h2>管理部メンバー紹介</h2>
+                        <p>もつ楽を管理する人々を見てみよう!</p>
+                        <div class="button-container">
+                            <a href="members.html" class="btn btn-primary" rel="noopener noreferrer">メンバー一覧</a>
+                        </div>
                     </section>
                     <!--<section class="card">
                         <h2>もつ楽のクリエイター紹介</h2>
@@ -157,23 +164,40 @@
         
                 <aside class="sidebar-column">
                     <div class="sidebar-widget">
+                    <div class="sidebar-widget">
+                        <h3>Navigate</h3>
+                        <ul>
+                            <li><a href="update.html">更新履歴</a></li>
+                            <li><a href="members.html">管理部メンバー紹介</a></li>
+                            <li><a href="creators.html">クリエイター紹介</a></li>
+                        </ul>
+                    </div>
                         <h3>SNS</h3>
                         <div class="youtube-container">
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/?list=UUFOwm7Xgwb36ko8w6kFmBjQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         </div>
                     </div>
 
-                    <div class="sidebar-widget">
-                        <h3>Navigate</h3>
-                        <ul>
-                            <li><a href="update.html">更新履歴</a></li>
-                            <li><a href="members.html">管理部メンバー紹介</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="sidebar-widget">
-                        <h3>LINEオープンチャット</h3>
-                        <img src="image/motsuraku-QR.png" alt="LINEオープンチャットQRコード">
+                    
+                        <div class="sidebar-widget">
+    <h3>LINEオープンチャット</h3>
+    
+    <div class="line-card">
+        <div class="line-card-header">
+            <p class="line-card-title">星のカービィをもっと楽しむ!</p>
+            <span class="line-card-members">参加して会話しよう</span>
+        </div>
+        <div class="line-card-body">
+            <img src="image/motsuraku-QR.png" alt="QRコード" class="line-qr">
+            
+            <a href="https://x.gd/WdfIJ" target="_blank" class="line-btn">
+                参加する
+            </a>
+        </div>
+    </div>
+    
+                        <!--旧式<h3>LINEオープンチャット</h3>
+                        <img src="image/motsuraku-QR.png" alt="LINEオープンチャットQRコード">-->
                     </div>
                 </aside>
             </div>

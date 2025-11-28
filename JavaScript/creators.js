@@ -1,14 +1,16 @@
 // js/creators.js
 
 const creatorsData = [
+    //テンプレート
+    //{ id: "00",name: "undefined",position: "クリエイター",image: "../image/members/XX_00_Def.webp",message: "テンプレート",detail: "ディテール",achievements: [{title: "コンテンツ1",desc: "説明",link: "#"},{title: "コンテンツ2",desc: "説明",link: "#"}],gallery: [] // 画像がない場合は空配列}
     {
         id: "01",
         name: "パヤ爺",
-        position: "コンテンツクリエイター",
+        position: "マルチコンテンツクリエイター",
         image: "../image/members/HP_04_PYG.webp", 
         message: "動画制作をしています。", 
-        detail: `改行です。<br>
-                2行目です。`,
+        detail: `以前は動画制作を主にしていました。<br>
+                このサイトを制作しています。`,
         achievements: [
             {
                 type: "iframe", 
