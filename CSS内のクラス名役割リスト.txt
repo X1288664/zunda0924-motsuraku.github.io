@@ -64,7 +64,7 @@ CSS内のクラス名役割リスト
 
 .grid-item-content - グリッド内のカードのテキスト部分のスタイル。
 
-サーバー情報ページ (server-info.html) 関連
+サーバー情報ページ (server.html) 関連
 .text-pre-line - テキストの改行をそのまま表示に反映させるためのスタイル。
 
 .server-spec-list - サーバー情報のスペック一覧リストのスタイル。

@@ -26,7 +26,7 @@ const membersData = [
             {
                 title: "公式サイト",
                 desc: "本サイトの開発、運用<br>[クリックして詳細にアクセスできます]",
-                link: "server-info.html"
+                link: "server.html"
             }
         ]//功績がない場合は空の配列にしておく ⇒ achievements: []
     },
