@@ -315,10 +315,10 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 
 /* --- カードのデザイン --- */
 .member-card {
-    border: 1px solid #e0e0e0;
+    border: 1px var(--border-color);
     border-radius: 8px;
     overflow: hidden;
-    background: #fff;
+    background: var(--base-color);
     transition: transform 0.2s, box-shadow 0.2s;
     text-decoration: none; /* リンクの下線を消す */
     color: inherit; /* 文字色を継承 */
@@ -762,4 +762,18 @@ body.dark-mode .menu-container a {
 }
 body.dark-mode .menu-container a:hover {
     background-color: rgba(255, 255, 255, 0.05);
+}
+/* --- ダークモード時の特定要素の調整 --- */
+
+/* 重要なお知らせボックス（暗めの黄色にする） */
+body.dark-mode .notice-box {
+    background-color: #332b00; /* 暗い黄色 */
+    border-color: #665c00;     /* 枠線 */
+    color: #e0e0e0;
+}
+
+/* 埋め込みフレームの背景色 */
+body.dark-mode .embed-iframe {
+    background-color: var(--base-color);
+    border-color: var(--border-color);
 }
