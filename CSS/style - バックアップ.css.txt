@@ -166,7 +166,7 @@
             font-size: 0.9em;
         }
         
-        /* --- Server-info.html用 --- */
+        /* --- server-info.html用 --- */
         .server-spec-list { list-style: none; padding-left: 0; }
         .server-spec-list > li { margin-bottom: 10px; }
         
