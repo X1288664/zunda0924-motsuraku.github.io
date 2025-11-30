@@ -23,6 +23,12 @@ const creatorsData = [
                 title: "STUDIO MARX",
                 desc: "もつ楽の歴史などを動画で発信しています。",
                 link: "https://www.youtube.com/embed?listType=search&list=UUYyyjW5c7uuMxVkHVGb039Q"
+            },
+            {
+                type: "",
+                title: "公式サイト",
+                desc: "こちらのホームページです。",
+                link: "https://x1288664.github.io/zunda0924-motsuraku.github.io/index.html"
             }
         ],
         gallery: [
