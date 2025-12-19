@@ -12,7 +12,8 @@
     
     <link rel="icon" href="my-favicon/favicon.ico">
     <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         /* 詳細ページ専用のスタイル */
@@ -20,18 +21,42 @@
             max-width: 800px; 
             margin: 50px auto; 
             padding: 20px; 
+            text-align: center; /* 全体を中央揃え（お気に入りのデザイン） */
         }
         
-        /* ★画像のスタイル修正：これで中央に表示されます */
+        /* 画像のスタイル（アップロードいただいた修正版を維持） */
         .profile-img-large { 
-            width: auto;       /* 画像本来の幅を使用 */
-            max-width: 100%;   /* 画面からはみ出さないように */
-            max-height: 400px; /* 縦長になりすぎないよう制限 */
+            width: auto;       
+            max-width: 100%;   
+            max-height: 400px; 
             height: auto;
             border-radius: 10px; 
-            display: block;    /* ブロック要素にして */
-            margin: 0 auto 30px; /* 左右の余白を自動(auto)にして中央揃え */
+            display: block;    
+            margin: 0 auto 30px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #fff;
+        }
+
+        /* 名前を大きく */
+        #p-name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* 役職 */
+        #p-position {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        /* 詳細文は左揃えに戻して読みやすくする */
+        #p-detail {
+            text-align: left;
+            line-height: 1.8;
+            display: inline-block;
+            width: 100%;
         }
 
         .back-btn { 
@@ -55,38 +80,38 @@
                     <h1 class="site-title">もつ楽公式サイト</h1>
                     <p class="site-description">(Ver.0.8.1-Beta+GhP)</p>
                 </div>
-</div>
-            <nav class="main-navigation" style="display: flex; align-items: center; gap: 10px;">
-
-    <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">
-        🌙
-    </button>
-            <nav class="main-navigation">
-                <button class="menu-toggle">メニュー▼</button>
-                <div class="menu-container">
-                    <a href="creators.html">クリエイター</a>
-                    <a href="products.html">ソーシャルメディア</a>
-                    <a href="update.html">更新履歴</a>
-                    <a href="members.html">管理メンバー</a>
-                    <a href="server.html">このサイトについて</a>
-                </div>
-            </nav>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">🌙</button>
+                <nav class="main-navigation">
+                    <button class="menu-toggle">メニュー▼</button>
+                    <div class="menu-container">
+                        <a href="creators.html">クリエイター</a>
+                        <a href="products.html">ソーシャルメディア</a>
+                        <a href="update.html">更新履歴</a>
+                        <a href="members.html">管理メンバー</a>
+                        <a href="server.html">このサイトについて</a>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
 
     <main class="site-content">
-        <div class="profile-container">
+        <div class="profile-container card">
             <img id="p-image" src="" alt="" class="profile-img-large">
             <h1 id="p-name">読み込み中...</h1>
-            <p id="p-position" style="font-weight:bold; color:#666;"></p>
-            <hr>
-            <div id="p-detail" style="line-height: 1.8;"></div>
+            <p id="p-position"></p>
+            
+            <hr style="margin: 30px 0; opacity: 0.5;">
+            
+            <div id="p-detail"></div>
 
             <div id="achievements-section"></div>
 
-            <div class="button-container" style="margin-top: 30px;">
-    <a href="members.html" class="btn">← メンバー一覧に戻る</a>
-</div>
+            <div class="button-container" style="margin-top: 40px;">
+                <a href="members.html" class="btn">← メンバー一覧に戻る</a>
+            </div>
         </div>
     </main>
 
@@ -96,8 +121,8 @@
                 <a href="server.html">このサイトについて</a>
                 <span class="footer-social-icons">
                     <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
-                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
-                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap.xml自動生成ツール" /></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap"></a>
                 </span>
             </div>
             <p>© 2025 STUDIO MARX</p>
@@ -105,59 +130,96 @@
     </footer>
 
     <script src="JavaScript/script.js"></script>
-    <script src="JavaScript/members.js"></script>
     
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const targetId = params.get('id');
-        const member = membersData.find(m => m.id === targetId);
+        // Supabaseの設定
+        const supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
+        
+        // クライアント作成
+        const _client = supabase.createClient(supabaseUrl, supabaseKey);
 
-        if (member) {
-            // 基本情報の埋め込み
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. URLから ?id=XX を取得
+            const params = new URLSearchParams(window.location.search);
+            const targetId = params.get('id');
+
+            const container = document.querySelector('.profile-container');
+            const nameEl = document.getElementById('p-name');
+
+            // IDがない場合
+            if (!targetId) {
+                nameEl.textContent = "エラー";
+                document.getElementById('p-detail').innerHTML = '<p>メンバーIDが指定されていません。</p>';
+                return;
+            }
+
+            // 2. Supabaseからデータを取得（Management_Membersテーブル）
+            const { data: member, error } = await _client
+                .from('Management_Members')
+                .select('*')
+                .eq('id', targetId)
+                .single();
+
+            if (error || !member) {
+                console.error("データ取得エラー:", error);
+                nameEl.textContent = "該当なし";
+                document.getElementById('p-detail').innerHTML = '<p>メンバーが見つかりませんでした。</p>';
+                return;
+            }
+
+            // 3. 画面に表示
             document.title = member.name + " | メンバー紹介";
-            document.getElementById('p-image').src = member.image;
-            document.getElementById('p-image').alt = member.name;
-            document.getElementById('p-name').textContent = member.name;
-            document.getElementById('p-position').textContent = member.position;
-            document.getElementById('p-detail').innerHTML = member.detail;
-
-            // --- 功績セクションの生成処理 ---
-            const achSection = document.getElementById('achievements-section');
             
-            // 功績データが存在し、かつ中身が1つ以上ある場合のみ表示
+            // 画像パス（なければデフォルト）
+            const imgEl = document.getElementById('p-image');
+            imgEl.src = member.image ? member.image : 'image/members/default.webp';
+            imgEl.alt = member.name;
+
+            nameEl.textContent = member.name;
+            document.getElementById('p-position').textContent = member.position;
+            document.getElementById('p-detail').innerHTML = member.detail || '詳細情報はありません。';
+
+            // 4. 功績リストの生成
+            const achSection = document.getElementById('achievements-section');
+            achSection.innerHTML = ''; // クリア
+
             if (member.achievements && member.achievements.length > 0) {
                 let itemsHTML = '';
                 
                 member.achievements.forEach(item => {
-                    // リンクがあるかどうかでタグを使い分ける
                     const tag = item.link ? 'a' : 'div';
-                    const hrefAttr = item.link ? `href="${item.link}"` : '';
-                    // CSSのクラスを適用
-                    const classAttr = 'grid-item card'; 
-
+                    const hrefAttr = item.link ? `href="${item.link}" target="_blank"` : '';
+                    
+                    // class="card" を追加してアニメーションを適用
                     itemsHTML += `
-                        <${tag} ${hrefAttr} class="${classAttr}" style="display:block; text-decoration:none; color:inherit; transition:transform 0.2s;">
-                            <div class="grid-item-content" style="padding:15px;">
-                                <h3 style="margin-top:0;">${item.title}</h3>
-                                ${item.desc ? `<p style="margin-bottom:0; font-size:0.9em; color:#666;">${item.desc}</p>` : ''}
+                        <${tag} ${hrefAttr} class="grid-item card" style="display:block; text-decoration:none; color:inherit; padding:0; margin-bottom:0;">
+                            <div class="grid-item-content" style="padding:15px; text-align:left;">
+                                <h3 style="margin-top:0; font-size:1.1rem;">${item.title} ${item.link ? '🔗' : ''}</h3>
+                                ${item.desc ? `<p style="margin:0.5em 0 0; font-size:0.9em; color:#666;">${item.desc}</p>` : ''}
                             </div>
                         </${tag}>
                     `;
                 });
 
-                // セクション全体のHTMLを組み立てて挿入
                 achSection.innerHTML = `
-                    <section style="margin-top: 40px;">
-                        <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">管理部での功績</h2>
+                    <section style="margin-top: 50px; text-align:left;">
+                        <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">
+                            管理部での功績
+                        </h2>
                         <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px;">
                             ${itemsHTML}
                         </div>
                     </section>
                 `;
+                
+                // フェードインアニメーション用（少し遅らせて適用）
+                setTimeout(() => {
+                    const newCards = achSection.querySelectorAll('.card');
+                    newCards.forEach(c => c.classList.add('is-visible'));
+                }, 100);
             }
-        } else {
-            document.querySelector('.profile-container').innerHTML = '<h1>該当するメンバーが見つかりません。</h1><a href="members.html" class="back-btn">一覧に戻る</a>';
-        }
+        });
     </script>
 </body>
 </html>
