@@ -78,7 +78,7 @@
                 <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
                 <div>
                     <h1 class="site-title">もつ楽公式サイト</h1>
-                    <p class="site-description">(Ver.0.8.1-Beta+GhP)</p>
+                    <p class="site-description">(Ver.0.9.0-Beta+GhP)</p>
                 </div>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -131,30 +131,47 @@
 
     <script src="JavaScript/script.js"></script>
     
-    <script>
-        // Supabaseの設定
+<script>
+        // ==========================================
+        // Project ATLAS - Operation: NEXUS
+        // Profile Loader with Debug Console
+        // ==========================================
+
         const supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
-        
-        // クライアント作成
         const _client = supabase.createClient(supabaseUrl, supabaseKey);
 
+        // コンソール表示用
+        function logProfileStatus(status, detail) {
+            if (status === 'START') {
+                console.log(`
+=====================
+メンバーデータベース確認 (詳細)
+=====================
+`);
+            } else {
+                console.log(`${status} ...${detail}`);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
-            // 1. URLから ?id=XX を取得
+            logProfileStatus('START');
+            
+            // ID取得
             const params = new URLSearchParams(window.location.search);
             const targetId = params.get('id');
+            logProfileStatus('検索対象ID', targetId ? targetId : '未指定 ❌');
 
             const container = document.querySelector('.profile-container');
             const nameEl = document.getElementById('p-name');
 
-            // IDがない場合
             if (!targetId) {
                 nameEl.textContent = "エラー";
                 document.getElementById('p-detail').innerHTML = '<p>メンバーIDが指定されていません。</p>';
                 return;
             }
 
-            // 2. Supabaseからデータを取得（Management_Membersテーブル）
+            // データ取得
             const { data: member, error } = await _client
                 .from('Management_Members')
                 .select('*')
@@ -162,36 +179,34 @@
                 .single();
 
             if (error || !member) {
-                console.error("データ取得エラー:", error);
+                logProfileStatus('データベース読み込み', '失敗/データなし ❌');
+                console.error(error);
                 nameEl.textContent = "該当なし";
                 document.getElementById('p-detail').innerHTML = '<p>メンバーが見つかりませんでした。</p>';
                 return;
             }
 
-            // 3. 画面に表示
+            logProfileStatus('データベース読み込み', '完了 ✅');
+            logProfileStatus('テーブルのデータ', `取得成功 (${member.name})`);
+
+            // 表示処理
             document.title = member.name + " | メンバー紹介";
-            
-            // 画像パス（なければデフォルト）
             const imgEl = document.getElementById('p-image');
             imgEl.src = member.image ? member.image : 'image/members/default.webp';
             imgEl.alt = member.name;
-
             nameEl.textContent = member.name;
             document.getElementById('p-position').textContent = member.position;
             document.getElementById('p-detail').innerHTML = member.detail || '詳細情報はありません。';
 
-            // 4. 功績リストの生成
+            // 功績リスト生成
             const achSection = document.getElementById('achievements-section');
-            achSection.innerHTML = ''; // クリア
+            achSection.innerHTML = '';
 
             if (member.achievements && member.achievements.length > 0) {
                 let itemsHTML = '';
-                
                 member.achievements.forEach(item => {
                     const tag = item.link ? 'a' : 'div';
                     const hrefAttr = item.link ? `href="${item.link}" target="_blank"` : '';
-                    
-                    // class="card" を追加してアニメーションを適用
                     itemsHTML += `
                         <${tag} ${hrefAttr} class="grid-item card" style="display:block; text-decoration:none; color:inherit; padding:0; margin-bottom:0;">
                             <div class="grid-item-content" style="padding:15px; text-align:left;">
@@ -201,7 +216,6 @@
                         </${tag}>
                     `;
                 });
-
                 achSection.innerHTML = `
                     <section style="margin-top: 50px; text-align:left;">
                         <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">
@@ -212,8 +226,6 @@
                         </div>
                     </section>
                 `;
-                
-                // フェードインアニメーション用（少し遅らせて適用）
                 setTimeout(() => {
                     const newCards = achSection.querySelectorAll('.card');
                     newCards.forEach(c => c.classList.add('is-visible'));

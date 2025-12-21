@@ -12,7 +12,72 @@
     
     <link rel="icon" href="my-favicon/favicon.ico">
     <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* === 管理部メンバーページ(profile.html)と同じスタイル === */
+        .profile-container { 
+            max-width: 800px; 
+            margin: 50px auto; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        
+        /* 画像：中央に配置し、適切なサイズに調整 */
+        .profile-img-large { 
+            width: auto;       
+            max-width: 100%;   
+            max-height: 400px; 
+            height: auto;
+            border-radius: 10px; 
+            display: block;    
+            margin: 0 auto 30px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #fff;
+        }
+
+        /* 名前 */
+        #p-name {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* 役職 */
+        #p-position {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        /* 詳細文は読みやすいように左揃え */
+        #p-detail {
+            text-align: left;
+            line-height: 1.8;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 30px; 
+            color: #007bff; 
+            text-decoration: none; 
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        
+        /* ギャラリー用グリッド調整 */
+        .illust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -21,39 +86,40 @@
                 <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
                 <div>
                     <h1 class="site-title">もつ楽公式サイト</h1>
-                    <p class="site-description">(Ver.0.8.1-Beta+GhP)</p>
+                    <p class="site-description">(Ver.0.9.0-Beta+GhP)</p>
                 </div>
-</div>
-            <nav class="main-navigation" style="display: flex; align-items: center; gap: 10px;">
-
-    <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">
-        🌙
-    </button>
-            <nav class="main-navigation">
-                <button class="menu-toggle">メニュー▼</button>
-                <div class="menu-container">
-                    <a href="creators.html">クリエイター</a>
-                    <a href="products.html">ソーシャルメディア</a>
-                    <a href="update.html">更新履歴</a>
-                    <a href="members.html">管理メンバー</a>
-                    <a href="server.html">このサイトについて</a>
-                </div>
-            </nav>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">🌙</button>
+                <nav class="main-navigation">
+                    <button class="menu-toggle">メニュー▼</button>
+                    <div class="menu-container">
+                        <a href="creators.html">クリエイター</a>
+                        <a href="products.html">ソーシャルメディア</a>
+                        <a href="update.html">更新履歴</a>
+                        <a href="members.html">管理メンバー</a>
+                        <a href="server.html">このサイトについて</a>
+                    </div>
+                </nav>
+            </div>
         </div>
     </header>
 
-<main class="site-content">
-        <div class="profile-container">
+    <main class="site-content">
+        <div class="profile-container card">
             <img id="p-image" src="" alt="" class="profile-img-large">
             <h1 id="p-name">読み込み中...</h1>
-            <p id="p-position" style="font-weight:bold; color:#666;"></p>
-            <hr>
-            <div id="p-detail" style="line-height: 1.8;"></div>
+            <p id="p-position"></p>
+            
+            <hr style="margin: 30px 0; opacity: 0.5;">
+            
+            <div id="p-detail"></div>
+
             <div id="achievements-section"></div>
 
             <div id="gallery-section"></div>
 
-            <div class="button-container" style="margin-top: 30px;">
+            <div class="button-container" style="margin-top: 40px;">
                 <a href="creators.html" class="btn">← クリエイター一覧に戻る</a>
             </div>
         </div>
@@ -62,86 +128,133 @@
     <footer class="site-footer">
         <div class="container">
             <div class="footer-links">
-                <a href="https://x1288664.github.io/zunda0924-motsuraku.github.io/">トップページ</a>
-                <a href="products.html">制作物</a>
-                <a href="server.html">サイトについて</a>
+                <a href="server.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap"></a>
+                </span>
             </div>
-            <div class="footer-social-icons">
-                <a href="https://www.youtube.com/@studiomarx" target="_blank" rel="noopener noreferrer"><img src="image/YT-Logo.png" alt="YouTube"></a>
-                <a href="https://x.gd/P1zVi" target="_blank" rel="noopener noreferrer"><img src="image/LINE.png" alt="LINE"></a>
-            </div>
-            <p>&copy; 2025 STUDIO MARX</p>
+            <p>© 2025 STUDIO MARX</p>
         </div>
     </footer>
 
     <script src="JavaScript/script.js"></script>
-    <script src="JavaScript/creators.js"></script>
     
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const targetId = params.get('id');
-        const creator = creatorsData.find(c => c.id === targetId);
+<script>
+const supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
+        const _client = supabase.createClient(supabaseUrl, supabaseKey);
 
-        if (creator) {
-            document.title = creator.name + " | クリエイター詳細";
-            document.getElementById('p-image').src = creator.image;
-            document.getElementById('p-image').alt = creator.name;
-            document.getElementById('p-name').textContent = creator.name;
-            document.getElementById('p-position').textContent = creator.position;
-            document.getElementById('p-detail').innerHTML = creator.detail;
+        function logDetailStatus(status, detail) {
+            console.log(`${status} ...${detail}`);
+        }
 
-// --- 功績セクション ---
-            const achSection = document.getElementById('achievements-section');
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('\n=== クリエイター詳細DB確認 ===');
             
-            if (creator.achievements && creator.achievements.length > 0) {
+            const params = new URLSearchParams(window.location.search);
+            const targetId = params.get('id');
+            const container = document.querySelector('.profile-container');
+            const nameEl = document.getElementById('p-name');
+
+            if (!targetId) {
+                nameEl.textContent = "エラー";
+                document.getElementById('p-detail').innerHTML = '<p>IDが指定されていません。</p>';
+                return;
+            }
+
+            // データ取得
+            const { data: creator, error } = await _client
+                .from('Creators')
+                .select(`
+                    *,
+                    Creator_Achievements(*),
+                    Creator_Gallery(*)
+                `)
+                .eq('id', targetId)
+                .single();
+
+            if (error || !creator) {
+                console.error(error);
+                nameEl.textContent = "該当なし";
+                document.getElementById('p-detail').innerHTML = '<p>データが見つかりませんでした。</p>';
+                return;
+            }
+
+            logDetailStatus('データ取得', `成功 (${creator.name}) ✅`);
+            
+            // --- 1. 基本情報 ---
+            document.title = creator.name + " | クリエイター紹介";
+            
+            const imgEl = document.getElementById('p-image');
+            imgEl.src = creator.image ? creator.image : 'image/members/default.webp';
+            imgEl.alt = creator.name;
+
+            nameEl.textContent = creator.name;
+            document.getElementById('p-position').textContent = creator.position;
+            document.getElementById('p-detail').innerHTML = creator.detail || '詳細情報はありません。';
+
+// --- 2. 功績リスト (YouTubeとツールを区別して表示) ---
+            const achSection = document.getElementById('achievements-section');
+            achSection.innerHTML = '';
+            
+            const achievements = (creator.Creator_Achievements || []).sort((a, b) => a.sort_order - b.sort_order);
+
+            if (achievements.length > 0) {
                 let itemsHTML = '';
                 
-                creator.achievements.forEach(item => {
-                    let contentHTML = '';
-
-                    // タイプによって表示内容を分岐
-if (item.type === 'youtube') {
-                        // YouTubeの場合
-                        contentHTML = `
-                            <div class="grid-item-content">
-                                <h3 style="margin-top:0;">${item.title}</h3>
-                                ${item.desc ? `<p style="margin-bottom:10px;">${item.desc}</p>` : ''}
-                            </div>
-                            <div class="youtube-container">
-                                <iframe src="${item.link}" title="${item.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                achievements.forEach(item => {
+                    const descText = item.description || '';
+                    
+                    if (item.type === 'youtube') {
+                        // 【パターンA】YouTube動画 (16:9の比率、グリッド配置)
+                        itemsHTML += `
+                            <div class="grid-item card" style="display:block; padding:0; margin-bottom:0; overflow:hidden;">
+                                <div style="padding:15px; border-bottom:1px solid #eee;">
+                                    <h3 style="margin:0; font-size:1.1rem;">${item.title}</h3>
+                                    ${descText ? `<p style="margin:0.5em 0 0; font-size:0.9em; color:#666;">${descText}</p>` : ''}
+                                </div>
+                                <div style="position:relative; width:100%; padding-bottom:56.25%; height:0; background:#000;">
+                                    <iframe src="${item.link}" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen loading="lazy"></iframe>
+                                </div>
                             </div>
                         `;
-                        itemsHTML += `<div class="grid-item card">${contentHTML}</div>`;
-
                     } else if (item.type === 'iframe') {
-                        // その他の埋め込みの場合 (item.url → item.link に修正)
-                        contentHTML = `
-                            <div style="padding: 15px;">
-                                <h3 style="margin-top:0;">${item.title}</h3>
-                                ${item.desc ? `<p>${item.desc}</p>` : ''}
-                                <iframe src="${item.link}" class="embed-iframe" loading="lazy"></iframe>
+                        // 【パターンB】Webツール/Hugging Face (全幅表示、高さ固定)
+                        // style="grid-column: 1 / -1;" で横幅いっぱいに広げます
+                        itemsHTML += `
+                            <div class="grid-item card" style="display:block; padding:0; margin-bottom:0; overflow:hidden; grid-column: 1 / -1;">
+                                <div style="padding:15px; border-bottom:1px solid #eee;">
+                                    <h3 style="margin:0; font-size:1.1rem;">${item.title} 🛠️</h3>
+                                    ${descText ? `<p style="margin:0.5em 0 0; font-size:0.9em; color:#666;">${descText}</p>` : ''}
+                                </div>
+                                <div style="width:100%; height:600px; background:#f9f9f9;">
+                                    <iframe src="${item.link}" style="width:100%; height:100%; border:none;" loading="lazy"></iframe>
+                                </div>
                             </div>
                         `;
-                        itemsHTML += `<div class="grid-item card">${contentHTML}</div>`;
-
                     } else {
-                        // 通常のリンクの場合 (item.url → item.link に修正)
+                        // 【パターンC】通常のリンクカード
                         const tag = item.link ? 'a' : 'div';
-                        const hrefAttr = item.link ? `href="${item.link}"` : '';
+                        const hrefAttr = item.link ? `href="${item.link}" target="_blank"` : '';
                         
-                        contentHTML = `
-                            <div class="grid-item-content" style="padding:15px;">
-                                <h3 style="margin-top:0;">${item.title}</h3>
-                                ${item.desc ? `<p style="margin-bottom:0; font-size:0.9em; color:#666;">${item.desc}</p>` : ''}
-                            </div>
+                        itemsHTML += `
+                            <${tag} ${hrefAttr} class="grid-item card" style="display:block; text-decoration:none; color:inherit; padding:0; margin-bottom:0;">
+                                <div class="grid-item-content" style="padding:15px; text-align:left;">
+                                    <h3 style="margin-top:0; font-size:1.1rem;">${item.title} ${item.link ? '🔗' : ''}</h3>
+                                    ${descText ? `<p style="margin:0.5em 0 0; font-size:0.9em; color:#666;">${descText}</p>` : ''}
+                                </div>
+                            </${tag}>
                         `;
-                        itemsHTML += `<${tag} ${hrefAttr} class="grid-item card" style="display:block; text-decoration:none; color:inherit; transition:transform 0.2s;">${contentHTML}</${tag}>`;
                     }
                 });
 
                 achSection.innerHTML = `
-                    <section style="margin-top: 40px;">
-                        <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">制作実績・功績</h2>
+                    <section style="margin-top: 50px; text-align:left;">
+                        <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">
+                            主な活動・功績
+                        </h2>
                         <div class="grid-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
                             ${itemsHTML}
                         </div>
@@ -149,31 +262,40 @@ if (item.type === 'youtube') {
                 `;
             }
 
-            // --- ▼▼▼ イラストギャラリーの生成処理（ここを追加！） ▼▼▼ ---
-            const gallerySection = document.getElementById('gallery-section');
-            
-            if (creator.gallery && creator.gallery.length > 0) {
-                let galleryHTML = '<div class="illust-grid">';
-                
-                creator.gallery.forEach(art => {
+            // --- 3. ギャラリー ---
+            const gallSection = document.getElementById('gallery-section');
+            gallSection.innerHTML = '';
+
+            const gallery = (creator.Creator_Gallery || []).sort((a, b) => a.sort_order - b.sort_order);
+
+            if (gallery.length > 0) {
+                let galleryHTML = '';
+                gallery.forEach(art => {
                     galleryHTML += `
-                        <a href="${art.full}" class="illust-item" data-caption="${art.caption || ''}">
-                            <img src="${art.thumb}" alt="${art.caption || 'イラスト'}">
+                        <a href="${art.full_url}" class="illust-item" title="${art.caption || ''}" style="display:block; border-radius:8px; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                            <img src="${art.thumb_url}" alt="${art.caption || 'Artwork'}" style="width:100%; height:100%; object-fit:cover; display:block;">
                         </a>
                     `;
                 });
-                galleryHTML += '</div>';
 
-                gallerySection.innerHTML = `
-                    <section class="card" style="margin-top: 30px;">
-                        <h2>イラストギャラリー</h2>
-                        ${galleryHTML}
+                gallSection.innerHTML = `
+                    <section style="margin-top: 50px; text-align:left;">
+                        <h2 style="font-size:1.5rem; border-bottom:2px solid #007bff; padding-bottom:10px; margin-bottom:20px;">
+                            ギャラリー
+                        </h2>
+                        <div class="illust-grid">
+                            ${galleryHTML}
+                        </div>
                     </section>
                 `;
             }
-        } else {
-            document.querySelector('main .container').innerHTML = '<section class="card" style="text-align:center; padding:40px;"><h2>該当するクリエイターが見つかりません。</h2><p><a href="creators.html" class="btn">一覧に戻る</a></p></section>';
-        }
-    </script>
+
+            // アニメーション
+            setTimeout(() => {
+                const newCards = container.querySelectorAll('.card');
+                newCards.forEach(c => c.classList.add('is-visible'));
+            }, 100);
+        });
+</script>
 </body>
 </html>

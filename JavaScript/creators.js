@@ -1,64 +1,72 @@
-// js/creators.js
+// =======================================================
+// Project ATLAS - Operation: NEXUS
+// Creators List Loader (Simple Card Version)
+// =======================================================
 
-const creatorsData = [
-    //テンプレート
-    //{ id: "00",name: "undefined",position: "クリエイター",image: "image/members/XX_00_Def.webp",message: "テンプレート",detail: "ディテール",achievements: [{title: "コンテンツ1",desc: "説明",link: "#"},{title: "コンテンツ2",desc: "説明",link: "#"}],gallery: [] // 画像がない場合は空配列}
-    {
-        id: "01",
-        name: "パヤ爺",
-        position: "マルチコンテンツクリエイター",
-        image: "image/members/HP_04_PYG.webp", 
-        message: "動画制作をしています。", 
-        detail: `以前は動画制作を主にしていました。<br>
-                このサイトを制作しています。`,
-        achievements: [
-            {
-                type: "iframe", 
-                title: "LINEログマネージャー",
-                desc: "LトークのようにLINEのトークログを管理できるツールです。",
-                link: "https://sparc64-hermes-xp-2025.hf.space/"
-            },
-            {
-                type: "youtube",
-                title: "STUDIO MARX",
-                desc: "もつ楽の歴史などを動画で発信しています。",
-                link: "https://www.youtube.com/embed?listType=search&list=UUYyyjW5c7uuMxVkHVGb039Q"
-            },
-            {
-                type: "",
-                title: "公式サイト",
-                desc: "こちらのホームページです。",
-                link: "https://x1288664.github.io/zunda0924-motsuraku.github.io/index.html"
-            }
-        ],
-        gallery: [
-            {
-                thumb: "image/illustrations/thumb/image3.webp", // 小さい画像(一覧用)
-                full:  "image/illustrations/full/image3.webp",  // 大きい画像(拡大用)
-                caption: "作品タイトル1"              // キャプション(任意)
-            },
-            {
-                thumb: "image/illustrations/thumb/image2.jpg",
-                full:  "image/illustrations/full/image2.jpg",
-                caption: "作品タイトル2"
-            }
-        ]
-    },
-    {
-        id: "02",
-        name: "undefined",
-        position: "クリエイター",
-        image: "image/members/XX_00_Def.webp",
-        message: "テンプレート",
-        detail: "ディテール",
-        achievements: [
-            {
-                title: "コンテンツ1",
-                desc: "説明",
-                link: "#"
-            }
-        ],
-        gallery: [] // 画像がない場合は空配列
+const supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
+const _client = supabase.createClient(supabaseUrl, supabaseKey);
+
+// コンソール表示用（デバッグ）
+function logCreatorsStatus(status, detail) {
+    if (status === 'START') {
+        console.log(`
+=====================
+クリエイター一覧確認
+=====================
+`);
+    } else {
+        console.log(`${status} ...${detail}`);
     }
-    // ... 他のクリエイター ...
-];
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    logCreatorsStatus('START');
+    
+    const container = document.getElementById('creators-list');
+    if (!container) return;
+
+    container.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">クリエイター情報を読み込んでいます...</p>';
+
+    // 親テーブル(Creators)のみ取得すればOK
+    const { data: creators, error } = await _client
+        .from('Creators')
+        .select('*')
+        .order('id', { ascending: true });
+
+    if (error) {
+        logCreatorsStatus('読み込みエラー', '失敗 ❌');
+        console.error(error);
+        container.innerHTML = '<p style="grid-column: 1/-1;">データの読み込みに失敗しました。</p>';
+        return;
+    }
+
+    if (!creators || creators.length === 0) {
+        logCreatorsStatus('データ', 'なし (空)');
+        container.innerHTML = '<p style="grid-column: 1/-1;">クリエイター情報がありません。</p>';
+        return;
+    }
+
+    logCreatorsStatus('データ取得', `成功 (${creators.length}名) ✅`);
+    container.innerHTML = ''; // クリア
+
+    // カード生成
+    creators.forEach(creator => {
+        const mainImage = creator.image || 'image/members/default.webp';
+        
+        // 詳細ページへのリンク (creator-data.html?id=XX)
+        const cardHTML = `
+            <div class="member-card" onclick="window.location.href='creator-data.html?id=${creator.id}'" style="cursor: pointer;">
+                <div class="member-thumb">
+                    <img src="${mainImage}" alt="${creator.name}">
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">${creator.name}</h3>
+                    <p class="member-position">${creator.position}</p>
+                    <p class="member-message">${creator.message || ''}</p>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHTML);
+    });
+});

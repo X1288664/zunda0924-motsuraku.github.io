@@ -313,6 +313,14 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
     grid-template-columns: repeat(3, 1fr);
 }
 
+/* ページネーション用デザイン */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 40px 0;
+}
+
 /* --- カードのデザイン --- */
 .member-card {
     border: 1px var(--border-color);
@@ -776,4 +784,45 @@ body.dark-mode .notice-box {
 body.dark-mode .embed-iframe {
     background-color: var(--base-color);
     border-color: var(--border-color);
+}
+
+/* Zennリンク用のカードスタイル */
+.tech-link-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #f4f9ff; /* 薄い青背景 */
+    border: 1px solid #d0e3ff;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px 0;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.tech-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-decoration: none;
+}
+.tech-icon { font-size: 1.5rem; }
+.tech-arrow { margin-left: auto; color: #007bff; font-weight: bold; }
+/* ==================================================
+   Zennリンクカードのダークモード対応
+   ================================================== */
+body.dark-mode .tech-link-card {
+    background-color: var(--base-color); /* 背景をダークグレーに */
+    border-color: var(--border-color);   /* 枠線を馴染ませる */
+    color: var(--text-color);            /* 文字を白く */
+}
+
+/* カード内のサブテキスト（薄い文字）の色調整 */
+body.dark-mode .tech-link-card .tech-text span {
+    color: #aaaaaa !important; /* 見やすい薄グレーに変更 */
+}
+
+/* ダークモードでのホバー時 */
+body.dark-mode .tech-link-card:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* 少しだけ明るく光らせる */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
