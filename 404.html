@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ページが見つかりません - もつ楽公式サイト</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
+    
+    <link rel="icon" href="my-favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+
+<style>
+        /* 404ページ共通（スマホ・基本設定） */
+        .error-page-container {
+            display: flex;
+            flex-direction: column; /* スマホは縦並び */
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            padding: 40px 20px;
+            text-align: center; /* スマホは中央揃え */
+            gap: 30px; /* 画像と文字の間隔 */
+        }
+
+        .error-image-wrapper {
+            width: 100%;
+            max-width: 600px; /* スマホでの最大サイズ */
+        }
+
+        .error-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            /* ダークモード対応など既存のスタイル維持 */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .error-message {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* ▼▼▼ PC版（画面幅 900px以上）の時だけ横並びにする設定 ▼▼▼ */
+        @media (min-width: 900px) {
+            .error-page-container {
+                flex-direction: row; /* 横並びにする */
+                text-align: left;    /* 文字を左揃えにする */
+                gap: 60px;           /* 間隔を広めに */
+                max-width: 1200px;   /* PCでの全体の最大幅 */
+                margin: 0 auto;      /* 画面中央に配置 */
+            }
+
+            .error-image-wrapper {
+                width: 50%;          /* 左半分 */
+                margin-bottom: 0;    /* 下の余白を消す */
+            }
+
+            .error-message {
+                width: 50%;          /* 右半分 */
+                display: flex;
+                flex-direction: column;
+                justify-content: center; /* 上下中央に寄せる */
+            }
+
+            /* タイトルを少し大きく */
+            .error-message h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* ダークモード時の画像調整 */
+        body.dark-mode .error-image {
+            opacity: 0.9;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.9.1-Beta+GhP)</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">🌙</button>
+                <nav class="main-navigation">
+                    <button class="menu-toggle">メニュー▼</button>
+                    <div class="menu-container">
+                        <a href="creators.html">クリエイター</a>
+                        <a href="products.html">ソーシャルメディア</a>
+                        <a href="update.html">更新履歴</a>
+                        <a href="members.html">管理メンバー</a>
+                        <a href="server.html">このサイトについて</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="container">
+            <div class="error-page-container">
+                
+                <div class="error-image-wrapper">
+                    <img src="image/404.webp" alt="404 Page Not Found" class="error-image">
+                </div>
+
+                <div class="error-message">
+                    <h1 style="font-size: 1.5rem; margin-bottom: 10px;">ページが見つかりません</h1>
+                    <p style="color: #666; margin-bottom: 30px;">
+                        アクセスしようとしたページは削除されたか、<br>
+                        URLが変更されている可能性があります。
+                    </p>
+                    
+                    <div class="error-actions">
+                        <a href="index.html" class="btn">トップページへ戻る</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="server.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap"></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX</p>
+        </div>
+    </footer>
+
+    <script src="JavaScript/script.js"></script>
+</body>
+</html>
