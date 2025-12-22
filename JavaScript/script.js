@@ -1,4 +1,4 @@
-// JS/script.js (最終統合・リサイズ対応・完全版)
+// JS/script.js (最終統合・リサイズ対応・衝突回避版)
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const body = document.body;
 
-    // 保存された設定があれば適用
     if (localStorage.getItem('theme') === 'dark') {
         body.classList.add('dark-mode');
         if (themeToggleBtn) themeToggleBtn.textContent = '☀️';
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
-            
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('theme', 'dark');
                 themeToggleBtn.textContent = '☀️';
@@ -109,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let pcSliderInitialized = false;
     let mobileSliderInitialized = false;
 
-    // --- PC版 ギャラリースライダーのセットアップ関数 ---
     function setupPcSlider() {
         if (pcSliderInitialized) return;
         const pcGallery = document.querySelector('.gallery-section');
@@ -171,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- モバイル専用 ヒーロー画像スライダーのセットアップ関数 ---
     function setupMobileSlider() {
         if (mobileSliderInitialized) return;
         const heroContainer = document.querySelector('.hero-fullscreen');
@@ -259,7 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileSliderInitialized = true;
     }
 
-    // --- 画面サイズに応じて実行する関数を決定する ---
     function handleResize() {
         const isMobile = window.innerWidth <= 768;
         if (isMobile) {
@@ -269,57 +264,96 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- リサイズイベントの制御 ---
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
-            // リロードして状態をリセットするのが最も安全で確実
-            //window.location.reload();
         }, 250);
     });
 
-//==================================================
-    // イラストギャラリー・ライトボックス機能
-    //==================================================
-    // ページ内のギャラリーアイテムをクリックした時の処理（動的に生成される要素にも対応）
     document.body.addEventListener('click', (e) => {
         const link = e.target.closest('.illust-item');
         if (link) {
-            e.preventDefault(); // リンク遷移を無効化
+            e.preventDefault();
             const fullImgSrc = link.getAttribute('href');
-            
-            // ライトボックスのHTMLを生成
             const lightbox = document.createElement('div');
             lightbox.className = 'lightbox-overlay';
             lightbox.innerHTML = `
                 <div class="lightbox-close">&times;</div>
                 <img src="${fullImgSrc}" class="lightbox-content">
             `;
-
             document.body.appendChild(lightbox);
-
-            // フェードイン
-            requestAnimationFrame(() => {
-                lightbox.style.opacity = '1';
-            });
-
-            // 閉じる処理（ボタンクリック または 背景クリック）
+            requestAnimationFrame(() => { lightbox.style.opacity = '1'; });
             const closeLightbox = () => {
                 lightbox.style.opacity = '0';
                 setTimeout(() => {
-                    if (document.body.contains(lightbox)) {
-                        document.body.removeChild(lightbox);
-                    }
+                    if (document.body.contains(lightbox)) document.body.removeChild(lightbox);
                 }, 300);
             };
-
             lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) closeLightbox(); // 画像以外をクリックで閉じる
-            });
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
         }
     });
-    // --- 初期読み込み時に一度実行 ---
+
     handleResize();
+});
+
+/* ==================================================
+   Supabase連携：トップページ 最新ニュース表示
+   ================================================== */
+// ▼▼▼ 修正点: windowオブジェクトに紐づけることで、二重読み込み時のエラーを回避 ▼▼▼
+window.supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
+window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
+
+// 既にクライアントが作られていなければ作成する
+if (!window.supabaseClient) {
+    window.supabaseClient = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+}
+
+async function fetchTopNews() {
+    const newsList = document.getElementById('news-list');
+    if (!newsList) return;
+
+    try {
+        // window.supabaseClient を使用
+        const { data, error } = await window.supabaseClient
+            .from('New_News') 
+            .select('*')
+            .order('date', { ascending: false })
+            .limit(3);
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            newsList.innerHTML = '<li style="padding:10px;">お知らせはありません。</li>';
+            return;
+        }
+
+        newsList.innerHTML = '';
+        data.forEach(item => {
+            const dateStr = item.date.replace(/-/g, '.');
+            const catClass = 'cat-' + item.category;
+            let titleHtml = '';
+            if (item.link && item.link !== '#') {
+                titleHtml = `<a href="${item.link}" class="news-link">${item.title}</a>`;
+            } else {
+                titleHtml = `<span class="news-link" style="pointer-events:none;">${item.title}</span>`;
+            }
+            const li = document.createElement('li');
+            li.className = 'news-item';
+            li.innerHTML = `
+                <span class="news-date">${dateStr}</span>
+                <span class="news-category ${catClass}">${item.category}</span>
+                ${titleHtml}
+            `;
+            newsList.appendChild(li);
+        });
+    } catch (err) {
+        console.error('News Error:', err);
+        newsList.innerHTML = '<li style="color:red; padding:10px;">ニュースの読み込みに失敗しました。</li>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchTopNews();
 });

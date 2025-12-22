@@ -5,9 +5,8 @@
 
 // 1. 設定
 const ITEMS_PER_PAGE = 12; // 1ページあたりの表示人数
-const supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
-const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+// 【削除済み】ここでURLやKEYを定義してはいけません（script.jsのものを利用します）
 
 const memberContainer = document.querySelector('.member-grid');
 const paginationContainer = document.querySelector('.pagination-container') || createPaginationContainer();
@@ -21,7 +20,6 @@ function createPaginationContainer() {
 
 // --- デバッグ表示用関数 ---
 function logSystemStatus(status, detail) {
-    // 枠線付きで表示
     if (status === 'START') {
         console.log(`
 =====================
@@ -48,7 +46,8 @@ async function loadMembers() {
     if (currentPage < 1) currentPage = 1;
 
     // データ取得
-    const { data: allMembers, error } = await _supabase
+    // ★重要: 変数名を script.js に合わせて 'supabaseClient' に変更しました
+    const { data: allMembers, error } = await supabaseClient
         .from('Management_Members')
         .select('*')
         .order('id', { ascending: true });
@@ -84,7 +83,6 @@ async function loadMembers() {
 
     membersToShow.forEach(member => {
         const imagePath = member.image ? member.image : 'image/members/default.webp';
-        // メッセージがない場合のフォールバック（message -> description -> 空文字）
         const displayMsg = member.message || member.description || '';
 
         const cardHTML = `

@@ -3,9 +3,7 @@
 // Creators List Loader (Simple Card Version)
 // =======================================================
 
-const supabaseUrl = 'https://lfgrtbofqgrkeidjmjgc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmZ3J0Ym9mcWdya2VpZGptamdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxNDM3MTIsImV4cCI6MjA4MTcxOTcxMn0.mKZMkVRfpZFuk7W2nI9g1EX8pDk-THtVkfPVsL-5txM';
-const _client = supabase.createClient(supabaseUrl, supabaseKey);
+// 【削除済み】script.js で定義された supabaseClient を使用するため、ここでの定義は不要です
 
 // コンソール表示用（デバッグ）
 function logCreatorsStatus(status, detail) {
@@ -28,8 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     container.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">クリエイター情報を読み込んでいます...</p>';
 
-    // 親テーブル(Creators)のみ取得すればOK
-    const { data: creators, error } = await _client
+    // 親テーブル(Creators)のみ取得
+    // ★重要: 変数名を script.js に合わせて 'supabaseClient' に変更しました
+    const { data: creators, error } = await supabaseClient
         .from('Creators')
         .select('*')
         .order('id', { ascending: true });
@@ -54,7 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     creators.forEach(creator => {
         const mainImage = creator.image || 'image/members/default.webp';
         
-        // 詳細ページへのリンク (creator-data.html?id=XX)
         const cardHTML = `
             <div class="member-card" onclick="window.location.href='creator-data.html?id=${creator.id}'" style="cursor: pointer;">
                 <div class="member-thumb">

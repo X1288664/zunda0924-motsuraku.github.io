@@ -826,3 +826,93 @@ body.dark-mode .tech-link-card:hover {
     background-color: rgba(255, 255, 255, 0.05); /* 少しだけ明るく光らせる */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
+
+/* ==================================================
+   トップページ：最新ニュース (Supabase連携)
+   ================================================== */
+.news-section {
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color); /* 下線 */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.news-header .section-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.news-more-link {
+    font-size: 0.9rem;
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+/* ニュースリスト */
+.news-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.news-item {
+    display: flex;
+    flex-wrap: wrap; /* スマホで折り返す用 */
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    transition: background-color 0.2s;
+}
+
+.news-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* 日付 */
+.news-date {
+    font-family: monospace; /* 等幅フォントで数字を揃える */
+    color: #666;
+    margin-right: 15px;
+    font-size: 0.95rem;
+}
+
+/* カテゴリバッジ */
+.news-category {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    margin-right: 15px;
+    color: #fff;
+    background-color: #666; /* デフォルト色 */
+    font-weight: bold;
+}
+/* カテゴリごとの色分け（お好みで調整） */
+.cat-UPDATE { background-color: #007bff; } /* 青 */
+.cat-INFO { background-color: #28a745; }   /* 緑 */
+.cat-MAINTENANCE { background-color: #dc3545; } /* 赤 */
+
+/* タイトルリンク */
+.news-link {
+    color: var(--text-color);
+    text-decoration: none;
+    flex: 1; /* 残りの幅を埋める */
+    font-weight: 500;
+}
+.news-link:hover {
+    text-decoration: underline;
+    color: var(--main-color);
+}
+
+/* ダークモード対応 */
+body.dark-mode .news-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+body.dark-mode .news-date { color: #aaa; }
