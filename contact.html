@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ - もつ楽公式サイト</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
+    
+    <link rel="icon" href="my-favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+    
+    <meta property="og:title" content="お問い合わせ - もつ楽公式サイト">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://x1288664.github.io/zunda0924-motsuraku.github.io/contact.html">
+    <meta property="og:image" content="https://x1288664.github.io/zunda0924-motsuraku.github.io/image/ogp.png">
+
+    <style>
+        /* 選択画面専用のグリッドレイアウト */
+        .contact-selection-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .selection-card {
+            background: var(--base-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .selection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .selection-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .selection-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .selection-desc {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 768px) {
+            .contact-selection-grid {
+                grid-template-columns: 1fr; /* 縦積み */
+                gap: 20px;
+            }
+            .selection-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="JavaScript/script.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.9.1-Beta+GhP)</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">🌙</button>
+                <nav class="main-navigation">
+                    <button class="menu-toggle">メニュー▼</button>
+                    <div class="menu-container">
+                        <a href="creators.html">クリエイター</a>
+                        <a href="products.html">ソーシャルメディア</a>
+                        <a href="update.html">更新履歴</a>
+                        <a href="members.html">管理メンバー</a>
+                        <a href="server.html">このサイトについて</a>
+                        <a href="contact.html">お問い合わせ</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="container">
+            <h2 class="page-title">お問い合わせ項目の選択</h2>
+            
+            <p style="text-align: center; margin-bottom: 40px;">
+                お問い合わせの内容に合わせて、以下のフォームより選択してください。
+            </p>
+
+            <div class="contact-selection-grid">
+                <div class="selection-card">
+                    <span class="selection-icon">📩</span>
+                    <h3 class="selection-title">フィードバック・不具合報告</h3>
+                    <p class="selection-desc">
+                        サイトの誤字脱字、表示の崩れ、<br>
+                        動作の不具合などはこちらから。<br>
+                        感想もお待ちしています。
+                    </p>
+                    <a href="contact-feedback.html" class="btn btn-primary">報告フォームへ</a>
+                </div>
+
+                <div class="selection-card">
+                    <span class="selection-icon">💡</span>
+                    <h3 class="selection-title">機能追加リクエスト</h3>
+                    <p class="selection-desc">
+                        「こんな機能が欲しい！」<br>
+                        「ここをもっと便利にしてほしい」<br>
+                        あなたのアイデアを募集します。
+                    </p>
+                    <a href="contact-request.html" class="btn btn-primary">リクエストフォームへ</a>
+                </div>
+            </div>
+            <div class="button-container" style="margin-top: 40px;">
+                <a href="index.html" class="btn btn-primary">← メインページに戻る</a>
+            </div>
+
+        </div>
+    </main>
+
+<footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://x1288664.github.io/zunda0924-motsuraku.github.io/">トップページ</a>
+                <a href="products.html">制作物</a>
+                <a href="server.html">サイトについて</a>
+                <a href="privacy.html">プライバシーポリシー</a>
+            </div>
+            
+            <div class="footer-social-icons">
+                <a href="https://www.youtube.com/@studiomarx" target="_blank" rel="noopener noreferrer">
+                    <img src="image/YT-Logo.png" alt="YouTube">
+                </a>
+                <a href="https://x.gd/P1zVi" target="_blank" rel="noopener noreferrer">
+                    <img src="image/LINE.png" alt="LINE">
+                </a>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+                <a href="http://www.sitemapxml.jp/" target="_blank" class="sitemap-icon">
+                    <img src="image/sitemapxml.png" width="117" height="14" alt="sitemap">
+                </a>
+            </div>
+
+            <p>&copy; 2025 STUDIO MARX</p>
+        </div>
+    </footer>
+</body>
+</html>

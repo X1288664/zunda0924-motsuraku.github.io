@@ -6,17 +6,9 @@
 // 1. 設定
 const ITEMS_PER_PAGE = 12; // 1ページあたりの表示人数
 
-// 【削除済み】ここでURLやKEYを定義してはいけません（script.jsのものを利用します）
-
-const memberContainer = document.querySelector('.member-grid');
-const paginationContainer = document.querySelector('.pagination-container') || createPaginationContainer();
-
-function createPaginationContainer() {
-    const div = document.createElement('div');
-    div.className = 'pagination-container';
-    if(memberContainer) memberContainer.parentNode.insertBefore(div, memberContainer.nextSibling);
-    return div;
-}
+// 変数の定義だけしておく（中身はあとで入れます）
+let memberContainer = null;
+let paginationContainer = null;
 
 // --- デバッグ表示用関数 ---
 function logSystemStatus(status, detail) {
@@ -31,10 +23,34 @@ function logSystemStatus(status, detail) {
     }
 }
 
+// ページネーション用コンテナを作る関数
+function createPaginationContainer() {
+    const div = document.createElement('div');
+    div.className = 'pagination-container';
+    // memberContainerの直後に挿入
+    if(memberContainer && memberContainer.parentNode) {
+        memberContainer.parentNode.insertBefore(div, memberContainer.nextSibling);
+    }
+    return div;
+}
+
 async function loadMembers() {
-    if (!memberContainer) return;
+    // ★修正点: 関数が実行されたタイミング（ページ読み込み後）で要素を探す
+    memberContainer = document.querySelector('.member-grid');
     
-    // 開始ログ
+    // 要素がなければ終了
+    if (!memberContainer) {
+        console.error("エラー: .member-grid 要素が見つかりません");
+        return;
+    }
+
+    // ページネーション要素の取得または作成
+    paginationContainer = document.querySelector('.pagination-container');
+    if (!paginationContainer) {
+        paginationContainer = createPaginationContainer();
+    }
+    
+    // 開始ログ (ここが表示されるようになります)
     logSystemStatus('START');
     logSystemStatus('接続先', 'Supabase (Management_Members)');
 
@@ -46,7 +62,7 @@ async function loadMembers() {
     if (currentPage < 1) currentPage = 1;
 
     // データ取得
-    // ★重要: 変数名を script.js に合わせて 'supabaseClient' に変更しました
+    // script.js で定義された supabaseClient を使用
     const { data: allMembers, error } = await supabaseClient
         .from('Management_Members')
         .select('*')
@@ -120,4 +136,5 @@ function renderPagination(current, total) {
     }
 }
 
+// DOMContentLoaded（HTMLの読み込み完了）を待ってから実行
 document.addEventListener('DOMContentLoaded', loadMembers);

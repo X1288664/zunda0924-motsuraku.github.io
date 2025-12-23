@@ -143,7 +143,19 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 .profile-image-column { flex: 1; min-width: 200px; }
 .profile-details-column { flex: 2; }
 .tech-layout { display: flex; align-items: center; gap: 20px; }
-.tech-logo-column { flex-basis: 100px; flex-shrink: 0; }
+.tech-logo-column { 
+    flex-basis: 200px; 
+    flex-shrink: 0; 
+    text-align: center; /* ロゴを中央寄せ */
+}
+.tech-logo-column img[src*="github"] {
+    width: 80px;
+    height: auto;
+}
+body.dark-mode .tech-logo-column img[src*="github"] {
+    filter: invert(1);
+    opacity: 0.9; /* 眩しすぎないように少し透過 */
+}
 .grid-container, .member-grid {
     --grid-columns: 3; display: grid;
     grid-template-columns: repeat(var(--grid-columns), 1fr); gap: 20px;
@@ -219,12 +231,51 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 .update-list li:last-child { border-bottom: none; }
 .text-pre-line { white-space: pre-line; line-height: 1.8; }
 
-/* --- フッター --- */
+/* --- フッター (修正版) --- */
 .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center; }
-.footer-links { margin-bottom: 15px; }
-.footer-links a { color: #fff; margin: 0 10px; }
-.footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
-.footer-social-icons img:hover { opacity: 1; }
+
+.footer-links { 
+    margin-bottom: 20px; 
+    line-height: 2; 
+}
+
+.footer-links a { 
+    color: #fff; 
+    margin: 0 10px; 
+    display: inline-block; 
+    white-space: nowrap;
+}
+
+.footer-social-icons {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* ▼▼▼ 修正: アイコンの間隔を少し広げる ▼▼▼ */
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.footer-social-icons img { 
+    /* ▼▼▼ 修正: サイズを24pxから40pxに拡大 ▼▼▼ */
+    height: 40px; 
+    width: auto; 
+    opacity: 0.9; /* 少し明るく */
+    transition: opacity 0.2s, transform 0.2s; /* 動きを追加 */
+    vertical-align: middle;
+}
+
+/* ホバー時に少し浮き上がるエフェクトを追加 */
+.footer-social-icons img:hover { 
+    opacity: 1; 
+    transform: scale(1.1); 
+}
+
+/* サイトマップのバナーはそのまま（または微調整） */
+.sitemap-icon img {
+    height: 14px;
+    opacity: 0.6;
+}
 
 /* --- レスポンシブ対応 --- */
 @media (max-width: 768px) {
@@ -639,9 +690,12 @@ img { max-width: 100%; height: auto; vertical-align: middle; }
 /* css/style.css の一番下に追加 */
 
 /* --- モバイルでの横はみ出し防止 --- */
-html, body {
-    overflow-x: hidden; /* 横スクロールを禁止し、はみ出した部分を隠す */
-    max-width: 100vw;   /* 最大幅を画面幅に制限 */
+/* --- モバイルでの横はみ出し防止（修正版） --- */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden; /* スマホのみ横スクロールを禁止 */
+        max-width: 100vw;
+    }
 }
 
 /* 念のため、全ての画像とiframeも画面幅に収まるようにする */
@@ -916,3 +970,49 @@ body.dark-mode .news-item:hover {
     background-color: rgba(255, 255, 255, 0.05);
 }
 body.dark-mode .news-date { color: #aaa; }
+
+/* ==================================================
+   追加修正：ヘッダー透過 & サイドバー追従
+   ================================================== */
+
+/* 修正1: ダークモード時のヘッダー透過設定 */
+/* これがないと、スクロール時に「半透明の白」が適用されてグレーになってしまいます */
+body.dark-mode .site-header.has-scrolled {
+    background-color: rgba(31, 31, 31, 0.85); /* 半透明の黒（ダークモード背景色ベース） */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* 影も濃くする */
+}
+
+/* 修正2: PC版サイドバーのスクロール追従 (Sticky) */
+@media (min-width: 769px) {
+    .sidebar-column {
+        position: sticky;       /* スクロールに追従させる設定 */
+        top: 100px;             /* 画面上端からの距離 (ヘッダーの高さ82px + 余白) */
+        height: fit-content;    /* 中身の高さに合わせる (これがないと追従しない場合がある) */
+        align-self: start;      /* 親要素の上端に寄せる */
+    }
+}
+
+/* ==================================================
+   ダークモード文字色修正パッチ (完全版)
+   ================================================== */
+/* サイト内の #666 (濃いグレー) の文字を
+   ダークモード時に #cccccc (明るいグレー) に一括変更します。
+   
+   HTMLやJS内に直接書かれた style="color:#666" も上書きするため
+   !important を使用して強制適用させます。
+*/
+
+body.dark-mode .site-description,              /* ヘッダーのバージョン情報 */
+body.dark-mode .member-position,               /* メンバー一覧の役職 */
+body.dark-mode .creator-text-area #p-position, /* クリエイター詳細の役職(CSS指定) */
+body.dark-mode #p-position,                    /* プロフィール詳細の役職(styleタグ指定) */
+body.dark-mode .news-date,                     /* ニュースの日付 */
+body.dark-mode .selection-desc,                /* お問い合わせ選択の説明文 */
+body.dark-mode .grid-item-content p,           /* 功績リストの説明文(JS生成部分) */
+body.dark-mode .error-message p,               /* 404ページのメッセージ(インライン指定) */
+body.dark-mode .tech-text span,                /* 更新履歴のZennカード説明文(インライン指定) */
+body.dark-mode .grid-item p                    /* YouTubeやiframe埋め込みなど、特殊な構造のカード内の説明文*/
+{
+    color: #cccccc !important;
+}
+
