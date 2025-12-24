@@ -5,32 +5,68 @@
 <url>
   <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/</loc>
   <priority>1.0</priority>
-  <lastmod>2025-08-21T01:03:35+09:00</lastmod>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
+</url>
+<url>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/creators.html</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
 </url>
 <url>
   <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/products.html</loc>
   <priority>0.8</priority>
-  <lastmod>2025-08-21T01:03:35+09:00</lastmod>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
 </url>
 <url>
   <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/update.html</loc>
   <priority>0.8</priority>
-  <lastmod>2025-08-21T01:03:35+09:00</lastmod>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
 </url>
 <url>
-  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/Profile-server-manager.html</loc>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/members.html</loc>
   <priority>0.8</priority>
-  <lastmod>2025-08-21T01:03:35+09:00</lastmod>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
 </url>
 <url>
-  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/server-info.html</loc>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/server.html</loc>
   <priority>0.8</priority>
-  <lastmod>2025-08-21T01:03:35+09:00</lastmod>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
+</url>
+<url>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/contact.html</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
+</url>
+<url>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/privacy.html</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
 </url>
 <url>
   <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/index.html</loc>
   <priority>0.7</priority>
-  <lastmod>2025-08-21T01:03:35+09:00</lastmod>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
+</url>
+<url>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/contact-feedback.html</loc>
+  <priority>0.7</priority>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
+</url>
+<url>
+  <loc>https://x1288664.github.io/zunda0924-motsuraku.github.io/contact-request.html</loc>
+  <priority>0.7</priority>
+  <lastmod>2025-12-24T17:45:42+09:00</lastmod>
+  <changefreq>always</changefreq>
 </url>
 
 </urlset>
