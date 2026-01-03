@@ -27,7 +27,7 @@ f5.si 時代のプロトタイプを経て、GitHub Pages + Supabase の構成�
 
 ## 📂 開発について
 本プロジェクトは共同開発体制をとっています。
-開発に参加される方は、`develop` ブランチにある [DEVELOPMENT.md](DEVELOPMENT.md) を必ずご確認ください。
+開発に参加される方は、`develop` ブランチにある [README.md](https://github.com/X1288664/zunda0924-motsuraku.github.io/blob/develop/README.md) を必ずご確認ください。
 
 ## 👥 Credits
 * **Development:** STUDIO MARX
