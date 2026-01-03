@@ -1,35 +1,40 @@
-# 開発マニュアル (Project A.T.L.A.S)
+# Project A.T.L.A.S - Motsuraku Official Site
 
-## 📂 ディレクトリ構成
-- `index.html`: トップページ（アーカイブ一覧）
-- `CSS/`: スタイルシート格納
-- `JavaScript/`: スクリプト格納
-- `image/`: 共通画像
-- `archives/`: 過去バージョン保管（**ここは原則編集禁止**）
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Status](https://img.shields.io/badge/status-Live-success.svg)
+![License](https://img.shields.io/badge/license-Non--Commercial-lightgrey)
 
-## 🎨 CSS設計ガイドライン (style.css)
-本プロジェクトはCSS変数を使用してダークモードに対応しています。
-色を指定する際は、直接カラーコードを書かず、以下の変数を使用してください。
+**LINEオープンチャット「星のカービィをもっと楽しむ！」非公式ファンサイト**
 
-### カラー変数 (`:root`)
-- 背景色: `var(--bg-color)`
-- カード背景: `var(--card-bg)`
-- 文字色: `var(--text-color)`
-- アクセント（リンク/ボタン）: `var(--accent-color)`
-  - ライトモード: 青 (#007bff)
-  - ダークモード: 水色 (#66b2ff)
-- 枠線: `var(--border-color)`
+「Project A.T.L.A.S」は、コミュニティの活動内容、クリエイターの作品、最新ニュースを発信するためのWebプラットフォーム開発プロジェクトです。
+f5.si 時代のプロトタイプを経て、GitHub Pages + Supabase の構成で正式リリースされました。
 
-### 命名規則
-- クラス名はケバブケース（例: `.hero-image-wrapper`）を使用。
-- `!important` は原則禁止。
+## 🚀 サイトを見る (Live Demo)
+**[公式サイトへアクセス](https://x1288664.github.io/zunda0924-motsuraku.github.io/)**
 
-## 📜 JavaScript仕様 (script.js)
-- **ダークモード:**
-  - `localStorage` に設定を保存。
-  - `body` タグに `.dark-mode` クラスを付与することで切り替え。
-- **配置:**
-  - HTMLの末尾（`</body>`直前）で読み込み。
+## ✨ 主な機能
+* **レスポンシブデザイン:** PC / スマホ 両対応のモダンなUI。
+* **ダークモード:** OS設定の自動検知 ＋ 手動切り替えスイッチ。
+* **リアルタイムNews:** Supabase (BaaS) と連携したニュース配信システム。
+* **ギャラリー機能:** PCではスライダー、モバイルではスワイプ操作に対応。
+* **アーカイブ:** 過去のバージョンを閲覧できるアーカイブライブラリ（別リポジトリ）。
 
-## ⚠️ 注意事項
-- `archives/` 以下の過去ファイルは「歴史的資料」のため、リンク切れ修正以外では変更しないこと。
+## 🛠 使用技術 (Tech Stack)
+* **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
+* **Backend / Database:** Supabase (PostgreSQL)
+* **Hosting:** GitHub Pages
+* **Analytics:** Google Analytics 4
+
+## 📂 開発について
+本プロジェクトは共同開発体制をとっています。
+開発に参加される方は、`develop` ブランチにある [DEVELOPMENT.md](DEVELOPMENT.md) を必ずご確認ください。
+
+## 👥 Credits
+* **Development:** STUDIO MARX
+* **Community:** 星のカービィをもっと楽しむ！ (もつ楽)
+* **Original Game:** HAL Laboratory, Inc. / Nintendo
+
+---
+<p align="center">
+  &copy; 2025 STUDIO MARX / Motsuraku Unofficial Fan Site
+</p>
