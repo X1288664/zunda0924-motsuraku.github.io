@@ -1,4 +1,3 @@
-<<<<<<< develop
 # 開発マニュアル (Project A.T.L.A.S)
 
 このドキュメントは、「もつ楽公式サイト（Project A.T.L.A.S）」
@@ -180,4 +179,3 @@ f5.si 時代のプロトタイプを経て、GitHub Pages + Supabase の構成�
 <p align="center">
   &copy; 2025 STUDIO MARX / Motsuraku Unofficial Fan Site
 </p>
->>>>>>> main
